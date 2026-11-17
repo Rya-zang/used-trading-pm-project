@@ -23,7 +23,13 @@ export const nearbyPresets = [
   { id: "hospital", label: "医院" },
 ] as const;
 
-export type NearbyId = (typeof nearbyPresets)[number]["id"];
+export const placeWishPresets = [
+  ...nearbyPresets,
+  { id: "gym", label: "健身房" },
+  { id: "store", label: "便利店" },
+] as const;
+
+export type NearbyId = (typeof placeWishPresets)[number]["id"];
 
 export interface Point {
   lat: number;

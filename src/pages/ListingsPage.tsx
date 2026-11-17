@@ -10,6 +10,7 @@ import { cities, placeLabel } from "../domain/catalog.ts";
 import { pairOf, useDemo } from "../domain/demoStore.ts";
 import { emptyListingFilter, fakeListings, filterListings, type ListingFilter } from "../domain/places.ts";
 import { findCandidate } from "../domain/people.ts";
+import { listingPassesSharedMusts, metWishText, metWishes, placeWishesReady } from "../domain/placeWishes.ts";
 import { hasSharedStandard } from "../domain/searchStandard.ts";
 
 const linkClass =
@@ -19,11 +20,14 @@ export function ListingsPage() {
   const { personId = "" } = useParams();
   const person = findCandidate(personId);
   const demo = useDemo();
-  const ready = hasSharedStandard(pairOf(demo, personId).search);
+  const pair = pairOf(demo, personId);
+  const ready = hasSharedStandard(pair.search);
+  const wishes = pair.placeWishes;
+  const wishReady = placeWishesReady(wishes);
   const [filter, setFilter] = useState<ListingFilter>(emptyListingFilter);
   const areas = cities.flatMap((city) => city.areas.map((area) => ({ value: area.id, label: `${city.label}${area.label}` })));
   const layouts = [...new Set(fakeListings.map((item) => item.layout))];
-  const found = filterListings(fakeListings, filter);
+  const found = filterListings(fakeListings, filter).filter((listing) => listingPassesSharedMusts(listing, wishes));
 
   return (
     <MutualGate personId={personId} title="示例房源">
@@ -37,6 +41,11 @@ export function ListingsPage() {
           <p className="mt-4 text-sm leading-6">先把找房标准双方都确认了，再来看这些房子。</p>
         ) : (
           <>
+            {wishReady ? (
+              <p className="mt-4 text-sm leading-6 text-[#858585]">共同必须对不上的房子已经拿掉。下面标的是谁的愿望对上了。</p>
+            ) : (
+              <p className="mt-4 text-sm leading-6 text-[#858585]">周边愿望还没双方确认，这些房子先不按标签筛。</p>
+            )}
             <div className="mt-4 flex flex-col gap-3">
               <SelectField id="district" label="片区" value={filter.areaId} options={[{ value: "any", label: "不限" }, ...areas]} onChange={(areaId) => setFilter({ ...filter, areaId })} />
               <SelectField
@@ -93,6 +102,11 @@ export function ListingsPage() {
                           {listing.areaSqm} ㎡ · {listing.baths} 卫 · {listing.metro}
                         </p>
                         <ListingCommute listing={listing} />
+                        {wishReady ? (
+                          <p className="mt-2 text-xs leading-5 text-[#858585]">
+                            {metWishes(listing, wishes).map((item) => metWishText(item)).join("、") || "这些愿望都没对上"}
+                          </p>
+                        ) : null}
                       </Card>
                     </Link>
                   </li>
