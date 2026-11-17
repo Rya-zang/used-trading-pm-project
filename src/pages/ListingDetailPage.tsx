@@ -1,4 +1,5 @@
 import { Link, useParams } from "react-router-dom";
+import { ListingCommute } from "../components/ListingCommute.tsx";
 import { PageShell } from "../components/PageShell.tsx";
 import { PhotoTile } from "../components/PhotoTile.tsx";
 import { PrimaryButton } from "../components/PrimaryButton.tsx";
@@ -48,6 +49,7 @@ export function ListingDetailPage() {
           <Row label="配套" value={listing.amenities.join("、")} />
         </dl>
         <p className="mt-4 text-sm leading-6">{listing.description}</p>
+        <ListingCommute listing={listing} />
         <p className="mt-2 text-sm leading-6">
           你{saved ? "收藏了" : "还没收藏"}。对方{theySaved ? "也收藏了" : "还没收藏"}。
           {shared ? " 你已经发给对方看。" : ""}

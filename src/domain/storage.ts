@@ -1,5 +1,6 @@
 import { useSyncExternalStore } from "react";
 import { isRentalMode } from "./catalog.ts";
+import { isNearbyId, isWorkplaceId, type NearbyId, type WorkplaceId } from "./commute.ts";
 import {
   draftFromProfile,
   draftInProgress,
@@ -15,6 +16,8 @@ const DRAFT_KEY = "shunxin.draft.v1";
 const APPLICATIONS_KEY = "shunxin.applications.v1";
 const MESSAGES_KEY = "shunxin.messages.v1";
 const MIN_SCORE_KEY = "shunxin.min-score.v1";
+const WORKPLACE_KEY = "shunxin.workplace.v1";
+const WISHES_KEY = "shunxin.wishes.v1";
 
 export const CURRENT_USER_ID = "me";
 export const DEFAULT_MIN_SCORE = 40;
@@ -143,6 +146,8 @@ const draftStore = createStore<OnboardingDraft | null>(DRAFT_KEY, null, parseDra
 const applicationStore = createStore<ApplicationMap>(APPLICATIONS_KEY, {}, parseApplicationMap);
 const messageStore = createStore<readonly ChatMessage[]>(MESSAGES_KEY, [], parseMessages);
 const minScoreStore = createStore<number>(MIN_SCORE_KEY, DEFAULT_MIN_SCORE, parseMinScore);
+const workplaceStore = createStore<SavedWorkplace | null>(WORKPLACE_KEY, null, parseWorkplace);
+const wishesStore = createStore<SavedWishes>(WISHES_KEY, emptyWishes(), parseWishes);
 
 function useStore<T>(store: {
   subscribe: (listener: () => void) => () => void;
@@ -169,6 +174,58 @@ export function useMessages(): readonly ChatMessage[] {
 
 export function useMinScore(): number {
   return useStore(minScoreStore);
+}
+
+export interface SavedWorkplace {
+  presetId: WorkplaceId;
+  typed: string;
+}
+
+export interface SavedWishes {
+  presets: NearbyId[];
+  custom: string;
+}
+
+export function emptyWishes(): SavedWishes {
+  return { presets: [], custom: "" };
+}
+
+function parseWorkplace(value: unknown): SavedWorkplace | null {
+  if (!value || typeof value !== "object") return null;
+  const record = value as Record<string, unknown>;
+  if (typeof record.presetId !== "string" || !isWorkplaceId(record.presetId)) return null;
+  return {
+    presetId: record.presetId,
+    typed: typeof record.typed === "string" ? record.typed.slice(0, 40) : "",
+  };
+}
+
+function parseWishes(value: unknown): SavedWishes | null {
+  if (!value || typeof value !== "object") return null;
+  const record = value as Record<string, unknown>;
+  const presets = Array.isArray(record.presets)
+    ? record.presets.filter((item): item is NearbyId => typeof item === "string" && isNearbyId(item))
+    : [];
+  return {
+    presets,
+    custom: typeof record.custom === "string" ? record.custom.slice(0, 20) : "",
+  };
+}
+
+export function useSavedWorkplace(): SavedWorkplace | null {
+  return useStore(workplaceStore);
+}
+
+export function useSavedWishes(): SavedWishes {
+  return useStore(wishesStore);
+}
+
+export function saveWorkplace(workplace: SavedWorkplace) {
+  workplaceStore.write(workplace);
+}
+
+export function saveWishes(wishes: SavedWishes) {
+  wishesStore.write(wishes);
 }
 
 export function saveProfile(profile: RoommateProfile) {
@@ -266,6 +323,8 @@ export function clearLocalRoommateData() {
   applicationStore.reset();
   messageStore.reset();
   minScoreStore.reset();
+  workplaceStore.reset();
+  wishesStore.reset();
 }
 
 export function initialDraftFromLocation(search: string): OnboardingDraft {

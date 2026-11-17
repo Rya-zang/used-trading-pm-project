@@ -280,6 +280,83 @@ export const roommateCandidates: readonly RoommateProfile[] = [
   },
 ];
 
+/** 已经可以聊天的测试用户，不进入匹配和建议。 */
+export const testRoommates: readonly RoommateProfile[] = [
+  {
+    id: "test-linke",
+    nickname: "林可",
+    age: 27,
+    gender: "female",
+    avatarId: "tea",
+    bio: "测试用户。在徐汇上班，预算中等，早睡，自己做饭。",
+    cityId: "shanghai",
+    areaId: "xuhui",
+    budget: "4000-6000",
+    moveIn: "anytime",
+    rentalMode: "seek-together",
+    genderPreference: "any",
+    relationship: "single",
+    partnerMoveIn: null,
+    coupleAcceptance: "yes",
+    householdSize: "2",
+    sleep: "early",
+    cleanliness: "tidy",
+    social: "quiet",
+    cooking: "often",
+    mbti: null,
+  },
+  {
+    id: "test-zhouheng",
+    nickname: "周衡",
+    age: 29,
+    gender: "male",
+    avatarId: "sun",
+    bio: "测试用户。想住静安，预算高一些，晚睡，不太做饭。",
+    cityId: "shanghai",
+    areaId: "jingan",
+    budget: "8000-12000",
+    moveIn: "2027-01",
+    rentalMode: "has-listing",
+    genderPreference: "any",
+    relationship: "single",
+    partnerMoveIn: null,
+    coupleAcceptance: "discuss",
+    householdSize: "3",
+    sleep: "late",
+    cleanliness: "relaxed",
+    social: "often",
+    cooking: "rarely",
+    mbti: "ENTP",
+  },
+  {
+    id: "test-chenmai",
+    nickname: "陈麦",
+    age: 23,
+    gender: "female",
+    avatarId: "cloud",
+    bio: "测试用户。人在浦东，预算紧，作息普通，偶尔做饭。",
+    cityId: "shanghai",
+    areaId: "pudong",
+    budget: "1500-2500",
+    moveIn: "2026-11",
+    rentalMode: "seek-together",
+    genderPreference: "female",
+    relationship: "single",
+    partnerMoveIn: null,
+    coupleAcceptance: "no",
+    householdSize: "3",
+    sleep: "regular",
+    cleanliness: "normal",
+    social: "sometimes",
+    cooking: "sometimes",
+    mbti: "ISFJ",
+  },
+];
+
+export function isTestRoommate(id: string): boolean {
+  return testRoommates.some((person) => person.id === id);
+}
+
 export function findCandidate(id: string): RoommateProfile | null {
-  return roommateCandidates.find((person) => person.id === id) ?? null;
+  return roommateCandidates.find((person) => person.id === id) ?? testRoommates.find((person) => person.id === id) ?? null;
 }

@@ -80,10 +80,13 @@ export function MePage() {
       </section>
 
       <div className="mt-6 flex flex-col gap-2">
+        <PrimaryButton to="/housing/workplace" variant="quiet">
+          上班地点和周边
+        </PrimaryButton>
         <PrimaryButton to="/onboarding?edit=1">修改资料</PrimaryButton>
         {confirmClear ? (
           <>
-            <p className="text-sm leading-6">会清掉资料、申请、聊天，以及这台手机上的房间、看房、租金、约法和合租空间。</p>
+            <p className="text-sm leading-6">会清掉资料、申请、聊天、上班地点和周边，以及这台手机上的房间、看房、租金、约法和合租空间。</p>
             <PrimaryButton
               variant="quiet"
               onClick={() => {

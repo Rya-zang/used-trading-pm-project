@@ -1,4 +1,5 @@
 import type { AreaId, CityId } from "./catalog.ts";
+import type { NearbyId } from "./commute.ts";
 
 export const photoPresets = [
   { id: "living", label: "客厅", src: "/home/photo-living.jpg" },
@@ -52,6 +53,9 @@ export interface FakeListing {
   amenities: readonly string[];
   description: string;
   photoId: PhotoId;
+  lat: number;
+  lng: number;
+  nearby: readonly NearbyId[];
 }
 
 export interface ListingFilter {
@@ -170,6 +174,9 @@ export const fakeListings: readonly FakeListing[] = [
     metro: "1号线步行 8 分钟",
     amenities: ["电梯", "可做饭", "阳台"],
     description: "示例房源。两间卧室都能住人，客厅朝南。数字是假的。",
+    lat: 31.16,
+    lng: 121.42,
+    nearby: ["metro", "market", "park"],
     photoId: "living",
   },
   {
@@ -184,6 +191,9 @@ export const fakeListings: readonly FakeListing[] = [
     metro: "9号线步行 12 分钟",
     amenities: ["电梯", "两卫", "可做饭"],
     description: "示例房源。三间房，适合再找一位室友。",
+    lat: 31.176,
+    lng: 121.41,
+    nearby: ["metro", "snacks", "market"],
     photoId: "master",
   },
   {
@@ -198,6 +208,9 @@ export const fakeListings: readonly FakeListing[] = [
     metro: "8号线步行 6 分钟",
     amenities: ["近地铁", "可做饭"],
     description: "示例房源。总价低一些，没有电梯。",
+    lat: 31.275,
+    lng: 121.52,
+    nearby: ["metro", "snacks"],
     photoId: "second",
   },
   {
@@ -212,6 +225,9 @@ export const fakeListings: readonly FakeListing[] = [
     metro: "10号线步行 10 分钟",
     amenities: ["电梯", "采光好"],
     description: "示例房源。只有一间卧室，两个人住会挤。",
+    lat: 31.3,
+    lng: 121.512,
+    nearby: ["metro", "snacks", "market", "park"],
     photoId: "balcony",
   },
   {
@@ -226,6 +242,9 @@ export const fakeListings: readonly FakeListing[] = [
     metro: "2号线步行 9 分钟",
     amenities: ["电梯", "两卫", "阳台"],
     description: "示例房源。客厅大，卫生间有两个。",
+    lat: 31.21,
+    lng: 121.545,
+    nearby: ["park", "market", "hospital"],
     photoId: "living",
   },
   {
@@ -240,6 +259,9 @@ export const fakeListings: readonly FakeListing[] = [
     metro: "13号线步行 14 分钟",
     amenities: ["电梯", "两卫", "可做饭", "储藏"],
     description: "示例房源。面积大，整租数字更高。",
+    lat: 31.182,
+    lng: 121.545,
+    nearby: ["market", "hospital"],
     photoId: "kitchen",
   },
   {
@@ -254,6 +276,9 @@ export const fakeListings: readonly FakeListing[] = [
     metro: "2号线步行 5 分钟",
     amenities: ["电梯", "近地铁", "采光好"],
     description: "示例房源。地段靠中心，租金高。",
+    lat: 31.23,
+    lng: 121.455,
+    nearby: ["metro", "snacks", "hospital"],
     photoId: "master",
   },
   {
@@ -268,6 +293,9 @@ export const fakeListings: readonly FakeListing[] = [
     metro: "7号线步行 7 分钟",
     amenities: ["电梯", "两卫", "阳台", "可做饭"],
     description: "示例房源。三室，预算要够。",
+    lat: 31.232,
+    lng: 121.43,
+    nearby: ["metro", "park"],
     photoId: "living",
   },
   {
@@ -282,6 +310,9 @@ export const fakeListings: readonly FakeListing[] = [
     metro: "1号线步行 4 分钟",
     amenities: ["电梯", "近地铁", "可做饭"],
     description: "示例房源。地铁很近，适合通勤。",
+    lat: 31.195,
+    lng: 121.436,
+    nearby: ["metro", "snacks", "market", "hospital"],
     photoId: "second",
   },
   {
@@ -296,6 +327,9 @@ export const fakeListings: readonly FakeListing[] = [
     metro: "10号线步行 11 分钟",
     amenities: ["电梯", "可做饭", "阳台"],
     description: "示例房源。小区安静，楼下可以买菜。",
+    lat: 31.33,
+    lng: 121.505,
+    nearby: ["park", "market"],
     photoId: "kitchen",
   },
 ];

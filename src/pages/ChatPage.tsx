@@ -4,7 +4,7 @@ import { Avatar } from "../components/Avatar.tsx";
 import { PageShell } from "../components/PageShell.tsx";
 import { PrimaryButton } from "../components/PrimaryButton.tsx";
 import { genders, labelOf, placeLabel } from "../domain/catalog.ts";
-import { findCandidate } from "../domain/people.ts";
+import { findCandidate, isTestRoommate } from "../domain/people.ts";
 import { isMutual, sendMessage, useApplications, useMessages, useSavedProfile } from "../domain/storage.ts";
 
 const shellClass = "flex-1 px-5 pt-[max(1.25rem,env(safe-area-inset-top))] pb-44";
@@ -20,6 +20,7 @@ export function ChatPage() {
   const [text, setText] = useState("");
   const bottomRef = useRef<HTMLDivElement>(null);
   const mutual = person ? isMutual(applications[person.id]) : false;
+  const testing = person ? isTestRoommate(person.id) : false;
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ block: "end" });
@@ -36,7 +37,7 @@ export function ChatPage() {
     );
   }
 
-  if (!profile || !mutual) {
+  if (!testing && (!profile || !mutual)) {
     return (
       <PageShell title={`和${person.nickname}聊天`}>
         <h1 className="text-2xl font-semibold">还不能聊天</h1>

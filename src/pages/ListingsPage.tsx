@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Card } from "../components/Card.tsx";
+import { ListingCommute } from "../components/ListingCommute.tsx";
 import { MutualGate } from "../components/MutualGate.tsx";
 import { PageShell } from "../components/PageShell.tsx";
 import { PhotoTile } from "../components/PhotoTile.tsx";
@@ -91,6 +92,7 @@ export function ListingsPage() {
                         <p className="text-sm leading-6 text-warm">
                           {listing.areaSqm} ㎡ · {listing.baths} 卫 · {listing.metro}
                         </p>
+                        <ListingCommute listing={listing} />
                       </Card>
                     </Link>
                   </li>
