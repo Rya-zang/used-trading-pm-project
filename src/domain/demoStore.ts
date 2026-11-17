@@ -28,6 +28,15 @@ import {
   type SearchState,
   type SearchValue,
 } from "./searchStandard.ts";
+import {
+  confirmPlaceWishes,
+  emptyPlaceWishes,
+  parsePlaceWishes,
+  writePlaceWish,
+  type PlaceWishId,
+  type PlaceWishPick,
+  type PlaceWishState,
+} from "./placeWishes.ts";
 import { canMoveIn } from "./together.ts";
 import {
   agree,
@@ -80,6 +89,7 @@ export interface ChoreMark {
 export interface PairRecord {
   viewings: Viewing[];
   search: SearchState;
+  placeWishes: PlaceWishState;
   rent: RentDraft;
   rules: RulesState;
   myMoveIn: boolean;
@@ -132,6 +142,7 @@ export function emptyPair(): PairRecord {
   return {
     viewings: [],
     search: emptySearch(),
+    placeWishes: emptyPlaceWishes(),
     rent: emptyRent(),
     rules: emptyRules(),
     myMoveIn: false,
@@ -356,6 +367,7 @@ function parsePair(value: unknown): PairRecord {
       })
     : [];
   base.search = parseSearch(value.search);
+  base.placeWishes = parsePlaceWishes(value.placeWishes);
   base.rent = parseRent(value.rent);
   base.rules = parseRules(value.rules);
   base.myMoveIn = value.myMoveIn === true;
@@ -632,6 +644,24 @@ export function simulateTheirSearch(personId: string) {
 export function simulateTheyCopyMe(personId: string) {
   update((state) =>
     withPair(state, personId, (pair) => ({ ...pair, search: copyMineToTheirs(pair.search) })),
+  );
+}
+
+export function setPlaceWish(personId: string, side: Side, id: PlaceWishId, pick: PlaceWishPick | null) {
+  update((state) =>
+    withPair(state, personId, (pair) => ({
+      ...pair,
+      placeWishes: writePlaceWish(pair.placeWishes, side, id, pick),
+    })),
+  );
+}
+
+export function confirmPlaceWishSide(personId: string, side: Side) {
+  update((state) =>
+    withPair(state, personId, (pair) => ({
+      ...pair,
+      placeWishes: confirmPlaceWishes(pair.placeWishes, side),
+    })),
   );
 }
 

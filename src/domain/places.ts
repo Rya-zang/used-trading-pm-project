@@ -176,7 +176,7 @@ export const fakeListings: readonly FakeListing[] = [
     description: "示例房源。两间卧室都能住人，客厅朝南。数字是假的。",
     lat: 31.16,
     lng: 121.42,
-    nearby: ["metro", "market", "park"],
+    nearby: ["metro", "market", "park", "gym"],
     photoId: "living",
   },
   {
@@ -193,7 +193,7 @@ export const fakeListings: readonly FakeListing[] = [
     description: "示例房源。三间房，适合再找一位室友。",
     lat: 31.176,
     lng: 121.41,
-    nearby: ["metro", "snacks", "market"],
+    nearby: ["metro", "snacks", "market", "store"],
     photoId: "master",
   },
   {
@@ -227,7 +227,7 @@ export const fakeListings: readonly FakeListing[] = [
     description: "示例房源。只有一间卧室，两个人住会挤。",
     lat: 31.3,
     lng: 121.512,
-    nearby: ["metro", "snacks", "market", "park"],
+    nearby: ["metro", "snacks", "market", "park", "gym", "store"],
     photoId: "balcony",
   },
   {
@@ -278,7 +278,7 @@ export const fakeListings: readonly FakeListing[] = [
     description: "示例房源。地段靠中心，租金高。",
     lat: 31.23,
     lng: 121.455,
-    nearby: ["metro", "snacks", "hospital"],
+    nearby: ["metro", "snacks", "hospital", "store"],
     photoId: "master",
   },
   {
@@ -312,7 +312,7 @@ export const fakeListings: readonly FakeListing[] = [
     description: "示例房源。地铁很近，适合通勤。",
     lat: 31.195,
     lng: 121.436,
-    nearby: ["metro", "snacks", "market", "hospital"],
+    nearby: ["metro", "snacks", "market", "hospital", "gym"],
     photoId: "second",
   },
   {
@@ -329,7 +329,7 @@ export const fakeListings: readonly FakeListing[] = [
     description: "示例房源。小区安静，楼下可以买菜。",
     lat: 31.33,
     lng: 121.505,
-    nearby: ["park", "market"],
+    nearby: ["park", "market", "store"],
     photoId: "kitchen",
   },
 ];

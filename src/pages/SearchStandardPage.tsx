@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { MutualGate } from "../components/MutualGate.tsx";
+import { PlaceWishPanel } from "../components/PlaceWishPanel.tsx";
 import { PageShell } from "../components/PageShell.tsx";
 import { PrimaryButton } from "../components/PrimaryButton.tsx";
 import { Tag } from "../components/Tag.tsx";
@@ -69,6 +70,7 @@ export function SearchStandardPage() {
         </Link>
         <h1 className="mt-4 text-2xl font-semibold">一起把找房标准说清楚</h1>
         <p className="mt-2 text-sm leading-6">每一项可以是必须、最好，或可以商量。只有双方都确认，而且没有「必须」对不上的项，才算共同标准。</p>
+        <PlaceWishPanel personId={personId} />
         {ready ? <p className="mt-3 text-sm leading-6">共同标准定下来了。可以去看示例房源。</p> : null}
         {ready ? (
           <div className="mt-3">

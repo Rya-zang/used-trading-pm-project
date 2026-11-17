@@ -124,6 +124,34 @@ describe("一起找房的标准", () => {
   });
 });
 
+describe("一起找房的周边愿望", () => {
+  it("只有一边的必须留在个人需求里，双方都标必须才拿掉房子", async () => {
+    const { emptyPlaceWishes, listingPassesSharedMusts, metWishText, metWishes, wishGroups, writePlaceWish } =
+      await import("../src/domain/placeWishes.ts");
+    const { fakeListings } = await import("../src/domain/places.ts");
+    let state = emptyPlaceWishes();
+    state = writePlaceWish(state, "me", "metro", { id: "metro", must: true });
+    state = writePlaceWish(state, "me", "gym", { id: "gym", must: true });
+    state = writePlaceWish(state, "them", "store", { id: "store", must: true });
+    const alone = wishGroups(state);
+    assert.equal(alone.shared.length, 0);
+    assert.equal(alone.mine.find((item) => item.id === "metro")?.must, true);
+    assert.equal(alone.theirs.find((item) => item.id === "store")?.must, true);
+    state = writePlaceWish(state, "them", "metro", { id: "metro", must: false });
+    assert.equal(wishGroups(state).shared.find((item) => item.id === "metro")?.must, false);
+    state = writePlaceWish(state, "them", "metro", { id: "metro", must: true });
+    assert.equal(wishGroups(state).shared.find((item) => item.id === "metro")?.must, true);
+    const confirmed = { ...state, myConfirmed: true, theirConfirmed: true };
+    const flower = fakeListings.find((item) => item.id === "listing-05");
+    const kangjian = fakeListings.find((item) => item.id === "listing-01");
+    if (!flower || !kangjian) throw new Error("listing");
+    assert.equal(listingPassesSharedMusts(flower, confirmed), false);
+    assert.equal(listingPassesSharedMusts(kangjian, confirmed), true);
+    assert.ok(metWishes(kangjian, confirmed).some((item) => metWishText(item) === "双方都有地铁站"));
+    assert.ok(metWishes(kangjian, confirmed).some((item) => metWishText(item) === "我有健身房"));
+  });
+});
+
 describe("约法三章", () => {
   it("双方都提交之前不对照，没法同意的底线会挡住住在一起", () => {
     const mineOnly = submitMyRules(emptyRules(), hardLines, "t1");
