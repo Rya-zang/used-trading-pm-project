@@ -17,9 +17,11 @@ const navItems: readonly {
 export function PageShell({
   title,
   children,
+  mainClassName = "flex-1 px-5 pt-[max(1.25rem,env(safe-area-inset-top))] pb-28",
 }: {
   title?: string;
   children: ReactNode;
+  mainClassName?: string;
 }) {
   useEffect(() => {
     document.title = title ? `${title} · 顺心` : "顺心 · Roommate Match";
@@ -28,7 +30,7 @@ export function PageShell({
   return (
     <div className="min-h-dvh bg-cream text-ink">
       <div className="mx-auto flex min-h-dvh w-full max-w-[420px] flex-col">
-        <main className="flex-1 px-5 pt-[max(1.25rem,env(safe-area-inset-top))] pb-28">
+        <main className={mainClassName}>
           {children}
         </main>
       </div>

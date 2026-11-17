@@ -5,6 +5,9 @@ import { HasListingPage } from "./pages/HasListingPage.tsx";
 import { HomePage } from "./pages/HomePage.tsx";
 import { MePage } from "./pages/MePage.tsx";
 import { NotFoundPage } from "./pages/NotFoundPage.tsx";
+import { OnboardingPage } from "./pages/OnboardingPage.tsx";
+import { ChatPage } from "./pages/ChatPage.tsx";
+import { RoommateDetailPage } from "./pages/RoommateDetailPage.tsx";
 import { SeekTogetherPage } from "./pages/SeekTogetherPage.tsx";
 import { SharedSpacePage } from "./pages/SharedSpacePage.tsx";
 
@@ -13,7 +16,10 @@ export function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/onboarding" element={<OnboardingPage />} />
         <Route path="/roommates" element={<FindRoommatesPage />} />
+        <Route path="/roommates/:personId/chat" element={<ChatPage />} />
+        <Route path="/roommates/:personId" element={<RoommateDetailPage />} />
         <Route path="/housing" element={<FindHousingPage />} />
         <Route path="/space" element={<SharedSpacePage />} />
         <Route path="/me" element={<MePage />} />
