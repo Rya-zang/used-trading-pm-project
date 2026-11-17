@@ -107,6 +107,23 @@ export function wishLabels(presetIds: readonly string[], custom: string): { id: 
   return picked;
 }
 
+export interface CommuteItem {
+  id: string;
+  km: number | null;
+  met: string[];
+}
+
+export function localCommute(workplaceId: string | null, wishIds: readonly string[], custom: string): CommuteItem[] {
+  const labels = wishLabels(wishIds, custom);
+  const ranked = workplaceId && isWorkplaceId(workplaceId) ? rankListings(workplaceOf(workplaceId)) : null;
+  const kmOf = new Map(ranked?.map((item) => [item.listing.id, item.km]));
+  return fakeListings.map((listing) => ({
+    id: listing.id,
+    km: kmOf.get(listing.id) ?? null,
+    met: labels.filter((wish) => listingMeets(listing, wish.id, custom)).map((wish) => wish.id),
+  }));
+}
+
 export function listingMeets(listing: FakeListing, wishId: string, custom: string): boolean {
   if (wishId === "custom") {
     const line = custom.trim();

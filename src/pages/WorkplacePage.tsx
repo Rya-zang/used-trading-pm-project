@@ -8,9 +8,7 @@ import { fakeListings } from "../domain/places.ts";
 import {
   CLOSE_KM,
   formatKm,
-  listingMeets,
   nearbyPresets,
-  recommendListings,
   snapWorkplace,
   wishLabels,
   workplaceOf,
@@ -18,6 +16,7 @@ import {
   type NearbyId,
   type WorkplaceId,
 } from "../domain/commute.ts";
+import { commuteNote, itemOf, useCommuteReport } from "../domain/commuteReport.ts";
 import {
   saveWishes,
   saveWorkplace,
@@ -56,22 +55,34 @@ export function WorkplacePage() {
   }
 
   const origin = saved ? workplaceOf(saved.presetId) : null;
-  const recommendation = origin ? recommendListings(origin) : null;
+  const { report, ready } = useCommuteReport();
   const labels = wishLabels(wishes.presets, wishes.custom);
-  const ranked = recommendation?.items ?? fakeListings.map((listing) => ({ listing, km: null as number | null }));
-  const filtered =
-    labels.length === 0
-      ? ranked
-      : ranked.filter((item) => labels.some((wish) => listingMeets(item.listing, wish.id, wishes.custom)));
+  const rows = fakeListings.map((listing) => {
+    const item = itemOf(report.items, listing.id);
+    return { listing, km: item?.km ?? null, met: item?.met ?? [] };
+  });
+  const recommendation = origin
+    ? (() => {
+        const sorted = rows
+          .filter((item): item is typeof item & { km: number } => item.km !== null)
+          .sort((left, right) => left.km - right.km);
+        const close = sorted.filter((item) => item.km <= CLOSE_KM);
+        return { close: close.length > 0, items: close.length > 0 ? close : sorted.slice(0, 4) };
+      })()
+    : null;
+  const ranked = recommendation?.items ?? rows;
+  const filtered = labels.length === 0 ? ranked : ranked.filter((item) => labels.some((wish) => item.met.includes(wish.id)));
   const showing = labels.length > 0 && filtered.length === 0 ? ranked : filtered;
   const wishesMissedAll = labels.length > 0 && filtered.length === 0;
+  const mapLine = ready ? commuteNote(report.note) : null;
 
   return (
     <PageShell title="上班和周边">
       <h1 className="text-2xl font-semibold">上班和周边</h1>
       <p className="mt-2 text-sm leading-6 text-[#858585]">
-        选一个上海的办公区或校园，也可以自己写，会归到最近的示例地点。距离是按这些示例坐标算的，没有地图。
+        选一个上海的办公区或校园，也可以自己写，会归到最近的示例地点。
       </p>
+      {mapLine ? <p className="mt-2 text-sm leading-6 text-[#858585]">{mapLine}</p> : null}
 
       <section className="panel mt-6 p-4">
         <h2 className="text-[15px] font-semibold">上班地点</h2>
@@ -176,9 +187,9 @@ export function WorkplacePage() {
               <p className="mt-2 text-sm leading-6">这些愿望没有对上附近的房子，所以仍把最近的列出来，并标出对上了哪几条。</p>
             ) : null}
             <ul className="mt-3 flex flex-col gap-3">
-              {showing.map(({ listing, km }) => {
-                const met = labels.filter((wish) => listingMeets(listing, wish.id, wishes.custom));
-                const missed = labels.filter((wish) => !listingMeets(listing, wish.id, wishes.custom));
+              {showing.map(({ listing, km, met: metIds }) => {
+                const met = labels.filter((wish) => metIds.includes(wish.id));
+                const missed = labels.filter((wish) => !metIds.includes(wish.id));
                 return (
                   <li key={listing.id}>
                     <Card>
