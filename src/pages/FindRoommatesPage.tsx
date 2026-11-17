@@ -54,7 +54,7 @@ export function FindRoommatesPage() {
         <TestUsers />
         <div className="panel mt-4 p-4">
           <h2 className="text-[15px] font-semibold">先写好自己的资料</h2>
-          <p className="mt-2 text-sm leading-6 text-[#858585]">看室友建议之前，需要知道你是谁、想怎么住。资料会留在这台手机上。</p>
+          <p className="mt-2 text-sm leading-6 text-[#858585]">看室友建议之前，需要知道你是谁、想怎么住。</p>
           <div className="mt-4">
             <PrimaryButton to="/onboarding">去填写</PrimaryButton>
           </div>
@@ -73,7 +73,7 @@ export function FindRoommatesPage() {
       <h1 className="text-2xl font-semibold">室友建议</h1>
       <TestUsers />
       <p className="mt-2 text-sm leading-6">
-        下面是示例室友，用来演示，不是正在找房的真人。性别、能否接受情侣、一起住的人数对不上的人不会出现。
+        性别、能否接受情侣、一起住的人数对不上的人不会出现。
       </p>
       <p className="mt-2 text-sm leading-6 text-warm">{SCORE_DISCLAIMER}</p>
 
@@ -163,8 +163,8 @@ export function FindRoommatesPage() {
 function TestUsers() {
   return (
     <section className="mt-6">
-      <h2 className="text-[15px] font-semibold">测试用户</h2>
-      <p className="mt-1 text-xs leading-5 text-[#858585]">这几位已经可以聊天，不用等双方同意。消息留在这台手机上。</p>
+      <h2 className="text-[15px] font-semibold">可以直接聊</h2>
+      <p className="mt-1 text-xs leading-5 text-[#858585]">这几位已经可以聊天，不用等双方同意。</p>
       <ul className="mt-3 flex flex-col gap-3">
         {testRoommates.map((person) => (
           <li key={person.id}>
@@ -175,7 +175,6 @@ function TestUsers() {
                   <div className="min-w-0 flex-1">
                     <h3 className="text-[15px] font-semibold">
                       {person.nickname}
-                      <span className="ml-1.5 text-xs font-normal text-[#C9855A]">测试用户</span>
                     </h3>
                     <p className="mt-0.5 text-xs text-[#858585]">
                       {placeLabel(person.cityId, person.areaId)} · {labelOf(budgetBands, person.budget)}

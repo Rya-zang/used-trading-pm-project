@@ -42,9 +42,9 @@ export function TogetherPage() {
           <Step
             to={`/together/${personId}/rent`}
             title="租金怎么分"
-            detail={pair.rent.myConfirmed && pair.rent.theirConfirmed ? "双方都确认了" : "数字是假的，不会付款"}
+            detail={pair.rent.myConfirmed && pair.rent.theirConfirmed ? "双方都确认了" : "两边各自确认"}
           />
-          <Step to={`/together/${personId}/rules`} title="住在一起之前，先说好这些事" detail="不是合同，也没有惩罚" />
+          <Step to={`/together/${personId}/rules`} title="住在一起之前，先说好这些事" detail="双方写好再对照" />
         </ul>
         <section className="mt-8">
           <h2 className="text-base font-medium">决定住在一起</h2>
@@ -71,7 +71,7 @@ export function TogetherPage() {
               disabled={blockers.length > 0 || pair.theirMoveIn}
               onClick={() => decideToLive(personId, "them")}
             >
-              模拟对方也决定
+              对方也决定了
             </PrimaryButton>
           </div>
           <div className="mt-8">

@@ -118,7 +118,7 @@ function SpaceTools({ personId }: { personId: string }) {
   const pair = pairOf(useDemo(), personId);
   return (
     <div className="mt-6 flex flex-col gap-8">
-      <p className="text-sm leading-6 text-warm">约定要两边各自确认。你可以改一句再发，对方的回复用「模拟对方」来点。</p>
+      <p className="text-sm leading-6 text-warm">约定要两边各自确认。你可以改一句再发。</p>
       <Agreements personId={personId} items={pair.agreements} />
       <Requests personId={personId} items={pair.requests} />
       <Reminders personId={personId} items={pair.reminders} />
@@ -192,7 +192,7 @@ function AgreementRow({
           我确认
         </PrimaryButton>
         <PrimaryButton variant="quiet" onClick={() => confirmAgreement(personId, item.id, "them")}>
-          模拟对方也确认
+          对方也确认了
         </PrimaryButton>
         <PrimaryButton variant="quiet" onClick={() => setEditing((current) => !current)}>
           改一句
@@ -253,10 +253,10 @@ function Requests({
             <p className="mt-2 text-sm leading-6">对方：{item.reply === "ok" ? "好的" : item.reply === "talk" ? "我们聊聊" : "还没回"}</p>
             <div className="mt-3 flex flex-col gap-2">
               <PrimaryButton variant="quiet" onClick={() => replyRequest(personId, item.id, "ok")}>
-                模拟对方说好的
+                对方说好的
               </PrimaryButton>
               <PrimaryButton variant="quiet" onClick={() => replyRequest(personId, item.id, "talk")}>
-                模拟对方说我们聊聊
+                对方说我们聊聊
               </PrimaryButton>
             </div>
           </li>
@@ -301,13 +301,13 @@ function Reminders({
             </p>
             <div className="mt-3 flex flex-col gap-2">
               <PrimaryButton variant="quiet" onClick={() => respondReminder(personId, item.id, "done")}>
-                模拟对方标成做完了
+                对方标成做完了
               </PrimaryButton>
               <PrimaryButton variant="quiet" onClick={() => respondReminder(personId, item.id, "later")}>
-                模拟对方标成稍后再说
+                对方标成稍后再说
               </PrimaryButton>
               <PrimaryButton variant="quiet" onClick={() => respondReminder(personId, item.id, "talk")}>
-                模拟对方说我们聊聊
+                对方说我们聊聊
               </PrimaryButton>
             </div>
           </li>
@@ -340,7 +340,7 @@ function Chores({
                   我做了
                 </PrimaryButton>
                 <PrimaryButton variant="quiet" onClick={() => markChore(personId, id, "them")}>
-                  模拟对方做了
+                  对方做了
                 </PrimaryButton>
               </div>
             </li>

@@ -41,7 +41,7 @@ export function ChatPage() {
     return (
       <PageShell title={`和${person.nickname}聊天`}>
         <h1 className="text-2xl font-semibold">还不能聊天</h1>
-        <p className="mt-2 text-sm leading-6">双方都同意之后，才能在这里发消息。消息只留在这台手机上。</p>
+        <p className="mt-2 text-sm leading-6">双方都同意之后，才能在这里发消息。</p>
         <div className="mt-6">
           <PrimaryButton to={`/roommates/${person.id}`}>返回对方资料</PrimaryButton>
         </div>
@@ -69,7 +69,7 @@ export function ChatPage() {
         </span>
       </Link>
       {person.bio ? <p className="mt-3 text-sm leading-6">{person.bio}</p> : null}
-      <p className="mt-2 text-sm text-warm">点上面可以看完整资料。这里没有真正的聊天服务器。</p>
+      <p className="mt-2 text-sm text-warm">点上面可以看完整资料。</p>
       <div className="mt-4">
         <p className="text-sm leading-6 text-warm">可以先点一个话题，句子会填进输入框，你再自己发出去。</p>
         <div className="mt-2 flex flex-wrap gap-2">

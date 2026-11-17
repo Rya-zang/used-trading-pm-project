@@ -25,7 +25,7 @@ export interface RentDraft {
   agreedAt: string | null;
 }
 
-export const UTILITIES_NOTE = "水电燃气另算，不放进这比房租。这些数字是演示，不会真的付款。";
+export const UTILITIES_NOTE = "水电燃气另算，不放进这笔房租。";
 
 export const lightLabel: Record<LightLevel, string> = {
   bright: "光线好",

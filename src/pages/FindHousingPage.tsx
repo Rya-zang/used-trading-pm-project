@@ -57,7 +57,6 @@ export function FindHousingPage() {
       <PageShell title="找房">
         <h1 className="text-2xl font-semibold">我的房间</h1>
         <WorkplaceEntry />
-        <p className="mt-2 text-sm leading-6 text-warm">地址是写给演示看的，不会打开地图，也不会发给中介。</p>
         {demo.myRoom ? (
           <Link to={`/housing/rooms/${demo.myRoom.id}`} className={`${linkClass} mt-4 block`}>
             <Card>
@@ -86,7 +85,6 @@ export function FindHousingPage() {
 
         <section className="mt-8">
           <h2 className="text-sm text-warm">来申请的人</h2>
-          <p className="mt-2 text-sm leading-6">只有你这一台手机。可以先当作对方来申请，再由你自己同意。</p>
           <ul className="mt-3 flex flex-col gap-2">
             {roommateCandidates.map((person) => {
               const record = applications[person.id];
@@ -113,7 +111,7 @@ export function FindHousingPage() {
                         <PrimaryButton onClick={() => acceptTheirApplication(person.id)}>我同意</PrimaryButton>
                       ) : (
                         <PrimaryButton variant="quiet" onClick={() => receiveTheirApplication(person.id)}>
-                          模拟{person.nickname}来申请
+                          {person.nickname}已申请
                         </PrimaryButton>
                       )}
                     </div>

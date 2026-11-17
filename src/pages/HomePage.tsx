@@ -49,10 +49,12 @@ export function HomePage() {
   const continuing = !profile && draftInProgress(draft);
   const suggestions = profile ? suggestRoommates(profile, roommateCandidates, minScore) : [];
   const featured = suggestions[0];
-  const shown = featured?.person ?? (profile ? null : samplePerson);
-  const routePerson = featured?.person ?? samplePerson;
-  const pair = pairOf(demo, routePerson.id);
-  const livingTogether = isMutual(applications[routePerson.id]) && pair.myMoveIn && pair.theirMoveIn;
+  const shown = featured?.person ?? null;
+  const routePerson = featured?.person ?? (profile ? samplePerson : null);
+  const pair = routePerson ? pairOf(demo, routePerson.id) : null;
+  const livingTogether = Boolean(
+    routePerson && pair && isMutual(applications[routePerson.id]) && pair.myMoveIn && pair.theirMoveIn,
+  );
   const saved = demo.savedListingIds.includes(featuredListing.id);
 
   return (
@@ -127,10 +129,17 @@ export function HomePage() {
       </section>
 
       <section className="mt-8" aria-labelledby="recommend-heading">
-        <SectionTitle id="recommend-heading" moreTo="/roommates">
+        <SectionTitle id="recommend-heading" moreTo={profile ? "/roommates" : undefined}>
           为你推荐
         </SectionTitle>
-        {shown ? (
+        {!profile ? (
+          <div className={`mt-3 p-4 ${card}`}>
+            <p className="text-sm leading-6">先写下你是谁、想怎么住，再看适合的人。</p>
+            <Link to="/onboarding" className={`mt-2 inline-flex min-h-11 items-center text-sm text-[#C9855A] ${focus}`}>
+              去填写
+            </Link>
+          </div>
+        ) : shown ? (
           <Link to={`/roommates/${shown.id}`} className={`mt-3 block p-3.5 ${card} ${focus}`}>
             <div className="flex gap-3">
               <img
@@ -188,9 +197,17 @@ export function HomePage() {
       </section>
 
       <section className="mt-8" aria-labelledby="house-heading">
-        <SectionTitle id="house-heading" moreTo="/housing">
+        <SectionTitle id="house-heading" moreTo={profile ? "/housing" : undefined}>
           找到合适的房子
         </SectionTitle>
+        {!profile || !routePerson ? (
+          <div className={`mt-3 p-4 ${card}`}>
+            <p className="text-sm leading-6">先填写资料。已经有房就去写下房间，还没有房就和室友一起看。</p>
+            <Link to="/onboarding" className={`mt-2 inline-flex min-h-11 items-center text-sm text-[#C9855A] ${focus}`}>
+              去填写
+            </Link>
+          </div>
+        ) : (
         <div className={`relative mt-3 flex overflow-hidden ${card}`}>
           <Link
             to={`/housing/listings/${routePerson.id}/${featuredListing.id}`}
@@ -225,28 +242,29 @@ export function HomePage() {
             <Bookmark filled={saved} />
           </button>
         </div>
+        )}
       </section>
 
       <section className="mt-8" aria-labelledby="tools-heading">
         <SectionTitle id="tools-heading">合租生活工具</SectionTitle>
         <div className="mt-3 grid grid-cols-2 gap-2.5">
-          <Link to={`/together/${routePerson.id}/rent`} className={`p-3.5 ${card} ${focus}`}>
+          <Link to={routePerson ? `/together/${routePerson.id}/rent` : "/onboarding"} className={`p-3.5 ${card} ${focus}`}>
             <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#C9855A] text-white">
               <SplitLine />
             </span>
             <h3 className="mt-3 text-[15px] font-semibold">租金分摊</h3>
-            <p className="mt-1 text-[11px] leading-4 text-[#858585]">合理分配租金</p>
+            <p className="mt-1 text-[11px] leading-4 text-[#858585]">{routePerson ? "合理分配租金" : "先填写资料"}</p>
           </Link>
-          <Link to={`/together/${routePerson.id}/rules`} className={`p-3.5 ${card} ${focus}`}>
+          <Link to={routePerson ? `/together/${routePerson.id}/rules` : "/onboarding"} className={`p-3.5 ${card} ${focus}`}>
             <span className="flex h-9 w-9 items-center justify-center rounded-full border border-[#EAEAE6] text-[#C9855A]">
               <ShieldLine />
             </span>
             <h3 className="mt-3 text-[15px] font-semibold">约法三章</h3>
-            <p className="mt-1 text-[11px] leading-4 text-[#858585]">住之前先说好</p>
+            <p className="mt-1 text-[11px] leading-4 text-[#858585]">{routePerson ? "住之前先说好" : "先填写资料"}</p>
           </Link>
         </div>
         <Link
-          to={livingTogether ? `/space/${routePerson.id}` : "/space"}
+          to={routePerson ? (livingTogether ? `/space/${routePerson.id}` : "/space") : "/onboarding"}
           className={`mt-2.5 flex items-center gap-3 px-3.5 py-3 ${card} ${focus}`}
         >
           <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#FAFAF8] text-[#252525]">

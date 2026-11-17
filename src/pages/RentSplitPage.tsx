@@ -114,7 +114,7 @@ export function RentSplitPage() {
         <div className="mt-4 flex flex-col gap-2">
           <PrimaryButton onClick={() => confirmRent(personId, "me")}>我确认这个分法</PrimaryButton>
           <PrimaryButton variant="quiet" onClick={() => confirmRent(personId, "them")}>
-            模拟对方也确认
+            对方确认了
           </PrimaryButton>
           <PrimaryButton variant="quiet" onClick={() => reopenRentSplit(personId)}>
             重新打开

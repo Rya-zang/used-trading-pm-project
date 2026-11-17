@@ -31,7 +31,7 @@ export function PlaceWishPanel({ personId }: { personId: string }) {
       <WishPicker personId={personId} side="me" title="我的" picks={wishes.mine} />
       <div className="mt-3">
         <PrimaryButton variant="quiet" onClick={() => setShowTheirs((current) => !current)}>
-          模拟对方填写
+          对方填好了
         </PrimaryButton>
       </div>
       {showTheirs ? <WishPicker personId={personId} side="them" title="对方的" picks={wishes.theirs} /> : null}
@@ -47,7 +47,7 @@ export function PlaceWishPanel({ personId }: { personId: string }) {
           我确认这些愿望
         </PrimaryButton>
         <PrimaryButton variant="quiet" disabled={wishes.theirConfirmed} onClick={() => confirmPlaceWishSide(personId, "them")}>
-          模拟对方确认
+          对方确认了
         </PrimaryButton>
         <p className="text-sm leading-6 text-[#858585]">
           你：{wishes.myConfirmed ? "确认了" : "还没确认"}。对方：{wishes.theirConfirmed ? "确认了" : "还没确认"}。

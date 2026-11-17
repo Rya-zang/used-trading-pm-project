@@ -82,10 +82,10 @@ export function SearchStandardPage() {
             用我的资料填一版
           </PrimaryButton>
           <PrimaryButton variant="quiet" onClick={() => simulateTheirSearch(personId)}>
-            模拟对方也写一份
+            对方也写了一份
           </PrimaryButton>
           <PrimaryButton variant="quiet" onClick={() => simulateTheyCopyMe(personId)}>
-            模拟对方改成和我一样
+            对方改成和我一样
           </PrimaryButton>
         </div>
         <ul className="mt-6 flex flex-col gap-3">
@@ -104,7 +104,7 @@ export function SearchStandardPage() {
             我确认这份标准
           </PrimaryButton>
           <PrimaryButton variant="quiet" disabled={!theirsReady} onClick={() => confirmSearch(personId, "them")}>
-            模拟对方确认
+            对方确认了
           </PrimaryButton>
           <p className="text-sm leading-6 text-warm">
             你：{search.myConfirmed ? "确认了" : "还没确认"}。对方：{search.theirConfirmed ? "确认了" : "还没确认"}。

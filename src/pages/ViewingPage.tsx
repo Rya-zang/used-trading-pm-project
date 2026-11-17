@@ -131,9 +131,8 @@ function ViewingCard({ personId, viewing }: { personId: string; viewing: Viewing
       ) : null}
       {waitingOnThem ? (
         <div className="mt-3 flex flex-col gap-2">
-          <p className="text-sm leading-6 text-warm">等对方。下面三个按钮是在演对方。</p>
           <PrimaryButton variant="quiet" onClick={() => agreeTime(personId, viewing.id, "them")}>
-            模拟对方同意
+            对方确认了这个时间
           </PrimaryButton>
           <PrimaryButton
             variant="quiet"
@@ -146,10 +145,10 @@ function ViewingCard({ personId, viewing }: { personId: string; viewing: Viewing
               )
             }
           >
-            模拟对方改时间
+            对方改了时间
           </PrimaryButton>
           <PrimaryButton variant="quiet" onClick={() => declineTime(personId, viewing.id)}>
-            模拟对方说不去
+            对方这次不去
           </PrimaryButton>
         </div>
       ) : null}
@@ -175,10 +174,10 @@ function RoomAnswers({ personId, viewing }: { personId: string; viewing: Viewing
           我不想住这间
         </PrimaryButton>
         <PrimaryButton variant="quiet" onClick={() => setRoomAnswer(personId, viewing.id, "them", "yes")}>
-          模拟对方也愿意
+          对方也愿意
         </PrimaryButton>
         <PrimaryButton variant="quiet" onClick={() => setRoomAnswer(personId, viewing.id, "them", "no")}>
-          模拟对方不愿意
+          对方还不愿意
         </PrimaryButton>
       </div>
     </div>
@@ -215,10 +214,10 @@ function ListingAnswers({ personId, viewing }: { personId: string; viewing: View
         我不要这套
       </PrimaryButton>
       <PrimaryButton variant="quiet" onClick={() => setListingFeedback(personId, viewing.id, "them", { like: "yes", layout: "户型可以", rent: "租金还能谈", baths: "卫生间够用", other: "", keep: false })}>
-        模拟对方也愿意
+        对方也愿意要这套
       </PrimaryButton>
       <PrimaryButton variant="quiet" onClick={() => setListingFeedback(personId, viewing.id, "them", { like: "no", layout: "户型不合适", rent: "租金太高", baths: "卫生间不够", other: "还想再看看", keep: true })}>
-        模拟对方不要
+        对方不要这套
       </PrimaryButton>
     </div>
   );

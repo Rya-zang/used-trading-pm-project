@@ -35,7 +35,6 @@ export function ListingDetailPage() {
           ← 返回示例房源
         </Link>
         <h1 className="mt-4 text-2xl font-semibold">{listing.community}</h1>
-        <p className="mt-2 text-sm leading-6 text-warm">示例房源，不是真的在租。</p>
         <div className="mt-4">
           <PhotoTile id={listing.photoId} large />
         </div>
@@ -60,7 +59,7 @@ export function ListingDetailPage() {
             {saved ? "取消收藏" : "收藏"}
           </PrimaryButton>
           <PrimaryButton variant="quiet" onClick={() => simulateTheySavedListing(personId, listing.id)}>
-            模拟对方也收藏了
+            对方也收藏了
           </PrimaryButton>
           <PrimaryButton variant="quiet" onClick={() => shareListing(personId, listing.id)}>
             发给{person?.nickname}看

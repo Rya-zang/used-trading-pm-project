@@ -47,7 +47,7 @@ export function WorkplacePage() {
     saveWorkplace({ presetId: preset.id, typed: typed.trim() || preset.label });
     setPicked(preset.id);
     if (!typed.trim()) setTyped(preset.label);
-    setPlaceNote(`按「${preset.label}」来算距离。这是示例坐标，不是地图定位。`);
+    setPlaceNote(`按「${preset.label}」来算距离。`);
   }
 
   function toggleWish(id: NearbyId) {
@@ -80,7 +80,7 @@ export function WorkplacePage() {
     <PageShell title="上班和周边">
       <h1 className="text-2xl font-semibold">上班和周边</h1>
       <p className="mt-2 text-sm leading-6 text-[#858585]">
-        选一个上海的办公区或校园，也可以自己写，会归到最近的示例地点。
+        选一个上海的办公区或校园，也可以自己写，会归到最近的一个地点。
       </p>
       {mapLine ? <p className="mt-2 text-sm leading-6 text-[#858585]">{mapLine}</p> : null}
 
@@ -131,7 +131,7 @@ export function WorkplacePage() {
 
       <section className="panel mt-4 p-4">
         <h2 className="text-[15px] font-semibold">家里附近想有什么</h2>
-        <p className="mt-1 text-[11px] leading-4 text-[#858585]">可以多选。自定义只写一行，用来对照示例房源里的字。</p>
+        <p className="mt-1 text-[11px] leading-4 text-[#858585]">可以多选。自定义只写一行。</p>
         <div className="mt-3 flex flex-wrap gap-2">
           {nearbyPresets.map((item) => {
             const on = selected.includes(item.id);

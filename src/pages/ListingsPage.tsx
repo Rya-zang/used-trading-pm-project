@@ -36,7 +36,7 @@ export function ListingsPage() {
           ← 返回和{person?.nickname}的安排
         </Link>
         <h1 className="mt-4 text-2xl font-semibold">示例房源</h1>
-        <p className="mt-2 text-sm leading-6 text-warm">不是真的在租。没有中介，也没有地图。租金是假的。</p>
+        <p className="mt-2 text-sm leading-6 text-warm">按片区、租金、户型和周边来看。</p>
         {!ready ? (
           <p className="mt-4 text-sm leading-6">先把找房标准双方都确认了，再来看这些房子。</p>
         ) : (

@@ -50,7 +50,7 @@ const steps = [
   { title: "伴侣和人数", lead: "能否接受情侣、想几个人住，也会直接筛掉对不上的人。" },
   { title: "生活习惯", lead: "作息、整洁、吸烟、家务做法和做饭都会写进资料，也能拿来对照。" },
   { title: "性格标签", lead: `${MBTI_DISCLAIMER}可以不选。` },
-  { title: "看一遍再保存", lead: "保存之后会留在这台手机上，刷新也不会丢。" },
+  { title: "看一遍再保存", lead: "看一遍，没问题就保存。" },
 ] as const;
 
 export function OnboardingPage() {
@@ -94,7 +94,7 @@ export function OnboardingPage() {
     }
     leavingRef.current = true;
     saveProfile(profile);
-    navigate("/roommates");
+    navigate(profile.rentalMode === "has-listing" ? "/housing/publish" : "/roommates");
   }
 
   function onSubmit(event: FormEvent<HTMLFormElement>) {
@@ -146,7 +146,11 @@ export function OnboardingPage() {
           ) : null}
           <div className="min-w-0 flex-1">
             <PrimaryButton type="submit">
-              {draft.step === ONBOARDING_STEP_COUNT - 1 ? "保存并去看室友" : "下一步"}
+              {draft.step === ONBOARDING_STEP_COUNT - 1
+                ? draft.rentalMode === "has-listing"
+                  ? "保存并写下房间"
+                  : "保存并去看室友"
+                : "下一步"}
             </PrimaryButton>
           </div>
         </ActionBar>

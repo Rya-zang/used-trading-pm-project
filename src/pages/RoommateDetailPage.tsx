@@ -51,7 +51,6 @@ export function RoommateDetailPage() {
         <Avatar id={person.avatarId} size="lg" gender={person.gender} />
         <div>
           <h1 className="text-2xl font-semibold">{person.nickname}</h1>
-          {testing ? <p className="mt-1 text-xs text-[#C9855A]">测试用户</p> : null}
           <p className="mt-1 text-sm leading-6">
             {person.age} 岁 · {labelOf(genders, person.gender)}
           </p>
@@ -125,10 +124,7 @@ export function RoommateDetailPage() {
             </div>
           ) : application?.myAccepted ? (
             <div className="min-w-0 flex-1">
-              <p className="mb-2 text-center text-xs leading-5 text-warm">
-                现在只有你这一个账号。点下面，就当作对方也同意了。双方都同意后才能聊天。
-              </p>
-              <PrimaryButton onClick={() => simulateTheirAcceptance(person.id)}>模拟对方同意</PrimaryButton>
+              <PrimaryButton onClick={() => simulateTheirAcceptance(person.id)}>对方已同意</PrimaryButton>
             </div>
           ) : (
             <div className="min-w-0 flex-1">
