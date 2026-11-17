@@ -1,4 +1,5 @@
 import { Link, useParams } from "react-router-dom";
+import { Avatar } from "../components/Avatar.tsx";
 import { Card } from "../components/Card.tsx";
 import { MutualGate } from "../components/MutualGate.tsx";
 import { PageShell } from "../components/PageShell.tsx";
@@ -26,7 +27,10 @@ export function TogetherPage() {
         <Link to={person ? `/roommates/${person.id}` : "/roommates"} className="text-sm text-warm">
           ← 返回对方资料
         </Link>
-        <h1 className="mt-4 text-2xl font-semibold">和{person?.nickname}一起往下走</h1>
+        <div className="mt-4 flex items-center gap-3">
+          {person ? <Avatar id={person.avatarId} gender={person.gender} /> : null}
+          <h1 className="text-2xl font-semibold">和{person?.nickname}一起往下走</h1>
+        </div>
         <p className="mt-2 text-sm leading-6">看房、租金、约法都是两边各点各的。你不能替对方确认。</p>
         <ul className="mt-6 flex flex-col gap-2">
           <Step to={`/together/${personId}/viewing`} title="约看房" detail={placeAgreed(pair.viewings) ? "有一处双方都愿意" : "还没定下来"} />

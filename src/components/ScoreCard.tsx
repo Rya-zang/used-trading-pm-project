@@ -32,7 +32,7 @@ export function ScoreParts({ match }: { match: MatchExplanation }) {
 function Meter({ value, max }: { value: number; max: number }) {
   const width = Math.max(0, Math.min(100, Math.round((value / max) * 100)));
   return (
-    <div className="mt-2 h-2 overflow-hidden rounded-full bg-cream" aria-hidden="true">
+    <div className="mt-2 h-2 overflow-hidden rounded-full bg-[#eeeeea]" aria-hidden="true">
       <div className="h-full rounded-full bg-sage" style={{ width: `${width}%` }} />
     </div>
   );
@@ -84,7 +84,7 @@ export function ScoreCard({ match }: { match: MatchExplanation }) {
           ))}
         </ul>
       </div>
-      <div className="mt-4 rounded-card bg-oat p-4">
+      <div className="mt-4 panel p-4">
         <h3 className="text-sm text-warm">情侣合住</h3>
         <p className="mt-1 text-sm leading-6">{match.couple}</p>
         <h3 className="mt-3 text-sm text-warm">一起住的人数</h3>

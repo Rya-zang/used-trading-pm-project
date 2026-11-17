@@ -125,7 +125,7 @@ function SearchRow({ personId, id, label }: { personId: string; id: SearchFieldI
   const [stance, setStance] = useState<Stance>(mine?.stance ?? "prefer");
 
   return (
-    <li className="rounded-card bg-oat p-4">
+    <li className="panel p-4">
       <div className="flex items-start justify-between gap-2">
         <h2 className="text-base font-medium">{label}</h2>
         <Tag tone={relation === "same" ? "sage" : relation === "different" ? "warm" : "quiet"}>{relationLabel[relation]}</Tag>
@@ -162,7 +162,7 @@ function SearchRow({ personId, id, label }: { personId: string; id: SearchFieldI
             <input
               value={value}
               onChange={(event) => setValue(event.target.value.slice(0, 30))}
-              className="h-12 rounded-input border border-oat bg-cream px-3"
+              className="h-12 rounded-input border border-oat bg-white px-3"
               placeholder="写一句"
             />
             <div className="grid grid-cols-3 gap-2">
@@ -171,7 +171,7 @@ function SearchRow({ personId, id, label }: { personId: string; id: SearchFieldI
                   key={item}
                   type="button"
                   onClick={() => setStance(item)}
-                  className={`h-10 rounded-input text-sm ${stance === item ? "bg-sage" : "bg-cream"}`}
+                  className={`h-10 rounded-input border text-sm ${stance === item ? "border-sage bg-sage text-white" : "border-oat bg-white"}`}
                 >
                   {stanceLabel[item]}
                 </button>

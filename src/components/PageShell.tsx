@@ -25,7 +25,7 @@ export function PageShell({
   mainClassName?: string;
   variant?: "default" | "home";
 }) {
-  const home = variant === "home";
+  void variant;
   const main =
     mainClassName ??
     "flex-1 px-5 pt-[max(1.25rem,env(safe-area-inset-top))] pb-28";
@@ -35,7 +35,7 @@ export function PageShell({
   }, [title]);
 
   return (
-    <div className={home ? "min-h-dvh bg-[#FAFAF8] text-[#252525]" : "min-h-dvh bg-cream text-ink"}>
+    <div className="min-h-dvh bg-[#FAFAF8] text-[#252525]">
       <div className="mx-auto flex min-h-dvh w-full max-w-[420px] flex-col">
         <main className={main}>
           {children}
@@ -43,11 +43,7 @@ export function PageShell({
       </div>
       <nav aria-label="底部导航" className="pointer-events-none fixed inset-x-0 bottom-0 z-10">
         <div
-          className={
-            home
-              ? "pointer-events-auto mx-auto w-full max-w-[420px] border-t border-[#EEEEEA] bg-white pb-[env(safe-area-inset-bottom)]"
-              : "pointer-events-auto mx-auto w-full max-w-[420px] border-t border-oat bg-cream pb-[env(safe-area-inset-bottom)]"
-          }
+          className="pointer-events-auto mx-auto w-full max-w-[420px] border-t border-[#EEEEEA] bg-white pb-[env(safe-area-inset-bottom)]"
         >
           <ul className="grid grid-cols-5">
             {navItems.map((item) => (
@@ -57,33 +53,15 @@ export function PageShell({
                   end={item.end}
                   className={({ isActive }) =>
                     [
-                      "flex min-h-16 flex-col items-center justify-center gap-1 px-1 text-[11px] leading-none focus-visible:ring-2",
-                      home
-                        ? isActive
-                          ? "text-[#C9855A] focus-visible:ring-[#C9855A]"
-                          : "text-[#858585] focus-visible:ring-[#C9855A]"
-                        : isActive
-                          ? "text-ink focus-visible:ring-warm"
-                          : "text-muted focus-visible:ring-warm",
+                      "flex min-h-16 flex-col items-center justify-center gap-1 px-1 text-[11px] leading-none focus-visible:ring-2 focus-visible:ring-[#C9855A]",
+                      isActive ? "text-[#C9855A]" : "text-[#858585]",
                     ].join(" ")
                   }
                 >
-                  {({ isActive }) => (
-                    <>
-                      <span
-                        className={
-                          home
-                            ? "flex h-7 w-7 items-center justify-center"
-                            : isActive
-                              ? "flex h-7 w-7 items-center justify-center rounded-full bg-sage text-ink"
-                              : "flex h-7 w-7 items-center justify-center text-muted"
-                        }
-                      >
-                        <item.icon />
-                      </span>
-                      {item.label}
-                    </>
-                  )}
+                  <span className="flex h-7 w-7 items-center justify-center">
+                    <item.icon />
+                  </span>
+                  {item.label}
                 </NavLink>
               </li>
             ))}

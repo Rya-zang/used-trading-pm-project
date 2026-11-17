@@ -107,7 +107,7 @@ function ViewingCard({ personId, viewing }: { personId: string; viewing: Viewing
   const waitingOnThem = last && last.by === "me" && viewing.status !== "done" && viewing.status !== "cancelled" && viewing.status !== "confirmed";
 
   return (
-    <article className="rounded-card bg-oat p-4">
+    <article className="panel p-4">
       <div className="flex items-start justify-between gap-2">
         <h2 className="text-base font-medium">{viewing.placeLabel}</h2>
         <Tag tone={viewing.status === "confirmed" ? "sage" : viewing.status === "cancelled" ? "quiet" : "warm"}>
@@ -204,7 +204,7 @@ function ListingAnswers({ personId, viewing }: { personId: string; viewing: View
       <SelectField id={`baths-${viewing.id}`} label="卫生间" value={baths} options={["卫生间够用", "卫生间不够"].map((item) => ({ value: item, label: item }))} onChange={setBaths} />
       <label className="text-sm" htmlFor={`other-${viewing.id}`}>
         <span className="mb-2 block text-warm">其他问题</span>
-        <input id={`other-${viewing.id}`} value={other} onChange={(event) => setOther(event.target.value.slice(0, 40))} className="h-12 w-full rounded-input border border-oat bg-cream px-3" />
+        <input id={`other-${viewing.id}`} value={other} onChange={(event) => setOther(event.target.value.slice(0, 40))} className="h-12 w-full rounded-input border border-oat bg-white px-3" />
       </label>
       <label className="flex min-h-11 items-center gap-2 text-sm">
         <input type="checkbox" checked={keep} onChange={(event) => setKeep(event.target.checked)} className="h-4 w-4 accent-sage" />

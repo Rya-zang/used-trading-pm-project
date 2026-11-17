@@ -37,7 +37,7 @@ export function MePage() {
   return (
     <PageShell title="我的">
       <div className="flex items-center gap-3">
-        <Avatar id={profile.avatarId} size="lg" />
+        <Avatar id={profile.avatarId} size="lg" gender={profile.gender} />
         <div>
           <h1 className="text-2xl font-semibold">{profile.nickname}</h1>
           <p className="mt-1 text-sm leading-6">
@@ -64,7 +64,7 @@ export function MePage() {
                   <Card>
                     <div className="flex items-center justify-between gap-2">
                       <span className="flex items-center gap-2">
-                        <Avatar id={person.avatarId} size="sm" />
+                        <Avatar id={person.avatarId} size="sm" gender={person.gender} />
                         <span className="text-base">{person.nickname}</span>
                       </span>
                       <span aria-hidden="true" className="text-warm">

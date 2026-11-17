@@ -47,7 +47,7 @@ export function RoommateDetailPage() {
         ← 返回建议
       </Link>
       <div className="mt-4 flex items-center gap-3">
-        <Avatar id={person.avatarId} size="lg" />
+        <Avatar id={person.avatarId} size="lg" gender={person.gender} />
         <div>
           <h1 className="text-2xl font-semibold">{person.nickname}</h1>
           <p className="mt-1 text-sm leading-6">
@@ -67,7 +67,7 @@ export function RoommateDetailPage() {
       ) : null}
 
       {profile && blocked ? (
-        <section className="mt-6 rounded-card bg-oat p-4">
+        <section className="mt-6 panel p-4">
           <h2 className="text-base font-medium">对方现在不会出现在建议里</h2>
           <ul className="mt-2 flex flex-col gap-2">
             {blocks.map((block) => (

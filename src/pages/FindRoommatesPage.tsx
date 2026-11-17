@@ -73,7 +73,7 @@ export function FindRoommatesPage() {
                 <Link to={`/roommates/${person.id}`} className={linkClass}>
                   <Card>
                     <div className="flex gap-3">
-                      <Avatar id={person.avatarId} />
+                      <Avatar id={person.avatarId} gender={person.gender} />
                       <div className="min-w-0 flex-1">
                         <div className="flex items-start justify-between gap-2">
                           <h2 className="text-base font-medium">{person.nickname}</h2>

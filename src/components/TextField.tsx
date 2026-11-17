@@ -47,7 +47,7 @@ export function TextField({
         aria-invalid={invalid || undefined}
         onChange={handleChange}
         className={[
-          "h-12 w-full rounded-input border bg-cream px-3 text-base text-ink outline-none placeholder:text-muted focus-visible:border-warm",
+          "h-12 w-full rounded-input border bg-white px-3 text-base text-ink outline-none placeholder:text-muted focus-visible:border-sage",
           invalid ? "border-error" : "border-oat",
         ].join(" ")}
       />

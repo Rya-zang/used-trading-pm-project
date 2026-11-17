@@ -1,11 +1,11 @@
 import type { AreaId, CityId } from "./catalog.ts";
 
 export const photoPresets = [
-  { id: "living", label: "客厅", className: "bg-[#d5e0cf]" },
-  { id: "master", label: "主卧", className: "bg-[#e4d7c8]" },
-  { id: "second", label: "次卧", className: "bg-[#ead7b6]" },
-  { id: "kitchen", label: "厨房", className: "bg-[#ddd4c6]" },
-  { id: "balcony", label: "阳台", className: "bg-[#d7ddd4]" },
+  { id: "living", label: "客厅", src: "/home/photo-living.jpg" },
+  { id: "master", label: "主卧", src: "/home/photo-master.jpg" },
+  { id: "second", label: "次卧", src: "/home/photo-second.jpg" },
+  { id: "kitchen", label: "厨房", src: "/home/photo-kitchen.jpg" },
+  { id: "balcony", label: "阳台", src: "/home/photo-balcony.jpg" },
 ] as const;
 
 export type PhotoId = (typeof photoPresets)[number]["id"];

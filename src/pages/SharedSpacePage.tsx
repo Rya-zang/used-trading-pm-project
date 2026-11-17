@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { Avatar } from "../components/Avatar.tsx";
 import { Card } from "../components/Card.tsx";
 import { MutualGate } from "../components/MutualGate.tsx";
 import { PageShell } from "../components/PageShell.tsx";
@@ -61,10 +62,15 @@ export function SharedSpacePage() {
                 <li key={person.id}>
                   <Link to={ready ? `/space/${person.id}` : `/together/${person.id}`} className={linkClass}>
                     <Card>
-                      <h2 className="text-base font-medium">和{person.nickname}</h2>
-                      <p className="mt-1 text-sm leading-6 text-warm">
-                        {ready ? "已经决定住在一起" : "还没双方都决定，先去把看房、租金和约法走完"}
-                      </p>
+                      <div className="flex items-center gap-3">
+                        <Avatar id={person.avatarId} size="sm" gender={person.gender} />
+                        <div>
+                          <h2 className="text-base font-medium">和{person.nickname}</h2>
+                          <p className="mt-1 text-sm leading-6 text-warm">
+                            {ready ? "已经决定住在一起" : "还没双方都决定，先去把看房、租金和约法走完"}
+                          </p>
+                        </div>
+                      </div>
                     </Card>
                   </Link>
                 </li>
@@ -139,7 +145,7 @@ function Agreements({
           value={text}
           onChange={(event) => setText(event.target.value.slice(0, 80))}
           placeholder="写一句家里的约定"
-          className="h-12 rounded-input border border-oat bg-cream px-3"
+          className="h-12 rounded-input border border-oat bg-white px-3"
         />
         <PrimaryButton
           onClick={() => {
@@ -170,7 +176,7 @@ function AgreementRow({
   const [text, setText] = useState(item.text);
   const label = agreementCategories.find(([id]) => id === item.category)?.[1] ?? item.category;
   return (
-    <li className="rounded-card bg-oat p-4">
+    <li className="panel p-4">
       <p className="text-sm text-warm">{label}</p>
       <p className="mt-1 text-sm leading-6">{item.text}</p>
       <p className="mt-2 text-sm leading-6">
@@ -188,7 +194,7 @@ function AgreementRow({
         </PrimaryButton>
         {editing ? (
           <>
-            <input value={text} onChange={(event) => setText(event.target.value.slice(0, 80))} className="h-12 rounded-input border border-oat bg-cream px-3" />
+            <input value={text} onChange={(event) => setText(event.target.value.slice(0, 80))} className="h-12 rounded-input border border-oat bg-white px-3" />
             <PrimaryButton
               onClick={() => {
                 editAgreement(personId, item.id, text);
@@ -218,7 +224,7 @@ function Requests({
       <p className="mt-2 text-sm leading-6">先选一句，可以改完再发。对方怎么回，由你用模拟按钮点。</p>
       <div className="mt-3 flex flex-wrap gap-2">
         {requestTemplates.map((template) => (
-          <button key={template.id} type="button" onClick={() => setText(template.text)} className="h-10 rounded-full bg-oat px-3 text-sm">
+          <button key={template.id} type="button" onClick={() => setText(template.text)} className="h-10 rounded-full border border-oat bg-white px-3 text-sm">
             {template.label}
           </button>
         ))}
@@ -226,7 +232,7 @@ function Requests({
       <textarea
         value={text}
         onChange={(event) => setText(event.target.value.slice(0, 80))}
-        className="mt-3 min-h-20 w-full rounded-input border border-oat bg-cream px-3 py-3 text-base"
+        className="mt-3 min-h-20 w-full rounded-input border border-oat bg-white px-3 py-3 text-base"
       />
       <div className="mt-3">
         <PrimaryButton
@@ -239,7 +245,7 @@ function Requests({
       </div>
       <ul className="mt-4 flex flex-col gap-3">
         {items.map((item) => (
-          <li key={item.id} className="rounded-card bg-oat p-4">
+          <li key={item.id} className="panel p-4">
             <p className="text-sm leading-6">{item.text}</p>
             <p className="mt-2 text-sm leading-6">对方：{item.reply === "ok" ? "好的" : item.reply === "talk" ? "我们聊聊" : "还没回"}</p>
             <div className="mt-3 flex flex-col gap-2">
@@ -273,7 +279,7 @@ function Reminders({
         value={text}
         onChange={(event) => setText(event.target.value.slice(0, 80))}
         placeholder="比如：周五把共用纸巾补上"
-        className="mt-3 h-12 w-full rounded-input border border-oat bg-cream px-3"
+        className="mt-3 h-12 w-full rounded-input border border-oat bg-white px-3"
       />
       <div className="mt-3">
         <PrimaryButton
@@ -287,7 +293,7 @@ function Reminders({
       </div>
       <ul className="mt-4 flex flex-col gap-3">
         {items.map((item) => (
-          <li key={item.id} className="rounded-card bg-oat p-4">
+          <li key={item.id} className="panel p-4">
             <p className="text-sm leading-6">{item.text}</p>
             <p className="mt-2 text-sm leading-6">
               对方标成：{item.response === "done" ? "做完了" : item.response === "later" ? "稍后再说" : item.response === "talk" ? "我们聊聊" : "还没标"}
@@ -325,7 +331,7 @@ function Chores({
         {choreMeta.map(([id, label]) => {
           const mark = chores[id];
           return (
-            <li key={id} className="rounded-card bg-oat p-4">
+            <li key={id} className="panel p-4">
               <h3 className="text-base font-medium">{label}</h3>
               <p className="mt-1 text-sm leading-6">
                 {mark.by ? `${mark.by === "me" ? "我" : "对方"} · ${formatTime(mark.at)}` : "还没有人记过"}

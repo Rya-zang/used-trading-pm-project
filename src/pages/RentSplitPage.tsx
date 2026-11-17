@@ -140,7 +140,7 @@ function ModeButton({
     <button
       type="button"
       onClick={() => onPick(mode)}
-      className={`h-12 rounded-button text-base ${current === mode ? "bg-sage" : "bg-oat"}`}
+      className={`h-12 rounded-button border text-base ${current === mode ? "border-sage bg-sage text-white" : "border-oat bg-white"}`}
     >
       {children}
     </button>
@@ -149,7 +149,7 @@ function ModeButton({
 
 function RoomEditor({ title, room, onChange }: { title: string; room: SplitRoom; onChange: (room: SplitRoom) => void }) {
   return (
-    <fieldset className="rounded-card bg-oat p-4">
+    <fieldset className="panel p-4">
       <legend className="text-sm text-warm">{title}</legend>
       <div className="mt-3 flex flex-col gap-3">
         <TextField id={`${title}-area`} label="面积（㎡）" value={String(room.area)} inputMode="numeric" onChange={(value) => onChange({ ...room, area: Number(value.replace(/\D/g, "").slice(0, 3)) || 0 })} />

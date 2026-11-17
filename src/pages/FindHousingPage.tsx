@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { Avatar } from "../components/Avatar.tsx";
 import { Card } from "../components/Card.tsx";
 import { PageShell } from "../components/PageShell.tsx";
 import { PhotoTile } from "../components/PhotoTile.tsx";
@@ -81,11 +82,14 @@ export function FindHousingPage() {
                 <li key={person.id}>
                   <Card>
                     <div className="flex items-start justify-between gap-2">
-                      <div>
-                        <h3 className="text-base font-medium">{person.nickname}</h3>
-                        <p className="mt-1 text-sm leading-6 text-warm">
-                          {mutual ? "双方都同意了" : record?.theirAccepted ? "对方申请了，等你" : "还没申请"}
-                        </p>
+                      <div className="flex items-start gap-3">
+                        <Avatar id={person.avatarId} gender={person.gender} />
+                        <div>
+                          <h3 className="text-base font-medium">{person.nickname}</h3>
+                          <p className="mt-1 text-sm leading-6 text-warm">
+                            {mutual ? "双方都同意了" : record?.theirAccepted ? "对方申请了，等你" : "还没申请"}
+                          </p>
+                        </div>
                       </div>
                       {mutual ? <Tag>可以继续</Tag> : null}
                     </div>
@@ -158,8 +162,13 @@ export function FindHousingPage() {
                 <li key={person.id}>
                   <Link to={`/together/${person.id}/search`} className={linkClass}>
                     <Card>
-                      <h3 className="text-base font-medium">和{person.nickname}对找房标准</h3>
-                      <p className="mt-1 text-sm leading-6 text-warm">{ready ? "共同标准已经定了" : "还在对"}</p>
+                      <div className="flex items-center gap-3">
+                        <Avatar id={person.avatarId} size="sm" gender={person.gender} />
+                        <div>
+                          <h3 className="text-base font-medium">和{person.nickname}对找房标准</h3>
+                          <p className="mt-1 text-sm leading-6 text-warm">{ready ? "共同标准已经定了" : "还在对"}</p>
+                        </div>
+                      </div>
                     </Card>
                   </Link>
                 </li>
