@@ -17,25 +17,38 @@ const navItems: readonly {
 export function PageShell({
   title,
   children,
-  mainClassName = "flex-1 px-5 pt-[max(1.25rem,env(safe-area-inset-top))] pb-28",
+  mainClassName,
+  variant = "default",
 }: {
   title?: string;
   children: ReactNode;
   mainClassName?: string;
+  variant?: "default" | "home";
 }) {
+  const home = variant === "home";
+  const main =
+    mainClassName ??
+    "flex-1 px-5 pt-[max(1.25rem,env(safe-area-inset-top))] pb-28";
+
   useEffect(() => {
     document.title = title ? `${title} · 顺心` : "顺心 · Roommate Match";
   }, [title]);
 
   return (
-    <div className="min-h-dvh bg-cream text-ink">
+    <div className={home ? "min-h-dvh bg-[#FAFAF8] text-[#252525]" : "min-h-dvh bg-cream text-ink"}>
       <div className="mx-auto flex min-h-dvh w-full max-w-[420px] flex-col">
-        <main className={mainClassName}>
+        <main className={main}>
           {children}
         </main>
       </div>
       <nav aria-label="底部导航" className="pointer-events-none fixed inset-x-0 bottom-0 z-10">
-        <div className="pointer-events-auto mx-auto w-full max-w-[420px] border-t border-oat bg-cream pb-[env(safe-area-inset-bottom)]">
+        <div
+          className={
+            home
+              ? "pointer-events-auto mx-auto w-full max-w-[420px] border-t border-[#EEEEEA] bg-white pb-[env(safe-area-inset-bottom)]"
+              : "pointer-events-auto mx-auto w-full max-w-[420px] border-t border-oat bg-cream pb-[env(safe-area-inset-bottom)]"
+          }
+        >
           <ul className="grid grid-cols-5">
             {navItems.map((item) => (
               <li key={item.to}>
@@ -44,8 +57,14 @@ export function PageShell({
                   end={item.end}
                   className={({ isActive }) =>
                     [
-                      "flex min-h-16 flex-col items-center justify-center gap-1 px-1 text-[11px] leading-none focus-visible:ring-2 focus-visible:ring-warm",
-                      isActive ? "text-ink" : "text-muted",
+                      "flex min-h-16 flex-col items-center justify-center gap-1 px-1 text-[11px] leading-none focus-visible:ring-2",
+                      home
+                        ? isActive
+                          ? "text-[#C9855A] focus-visible:ring-[#C9855A]"
+                          : "text-[#858585] focus-visible:ring-[#C9855A]"
+                        : isActive
+                          ? "text-ink focus-visible:ring-warm"
+                          : "text-muted focus-visible:ring-warm",
                     ].join(" ")
                   }
                 >
@@ -53,9 +72,11 @@ export function PageShell({
                     <>
                       <span
                         className={
-                          isActive
-                            ? "flex h-7 w-7 items-center justify-center rounded-full bg-sage text-ink"
-                            : "flex h-7 w-7 items-center justify-center text-muted"
+                          home
+                            ? "flex h-7 w-7 items-center justify-center"
+                            : isActive
+                              ? "flex h-7 w-7 items-center justify-center rounded-full bg-sage text-ink"
+                              : "flex h-7 w-7 items-center justify-center text-muted"
                         }
                       >
                         <item.icon />
