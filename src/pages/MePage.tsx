@@ -7,6 +7,7 @@ import { PrimaryButton } from "../components/PrimaryButton.tsx";
 import { ProfileFacts } from "../components/ProfileFacts.tsx";
 import { genders, labelOf } from "../domain/catalog.ts";
 import { findCandidate } from "../domain/people.ts";
+import { clearDemoData } from "../domain/demoStore.ts";
 import { clearLocalRoommateData, isMutual, useApplications, useSavedProfile } from "../domain/storage.ts";
 
 const linkClass =
@@ -82,11 +83,12 @@ export function MePage() {
         <PrimaryButton to="/onboarding?edit=1">修改资料</PrimaryButton>
         {confirmClear ? (
           <>
-            <p className="text-sm leading-6">会清掉资料、申请和这台手机上的聊天记录。</p>
+            <p className="text-sm leading-6">会清掉资料、申请、聊天，以及这台手机上的房间、看房、租金、约法和合租空间。</p>
             <PrimaryButton
               variant="quiet"
               onClick={() => {
                 clearLocalRoommateData();
+                clearDemoData();
                 setConfirmClear(false);
               }}
             >
@@ -98,7 +100,7 @@ export function MePage() {
           </>
         ) : (
           <PrimaryButton variant="quiet" onClick={() => setConfirmClear(true)}>
-            清除本机上的资料和聊天
+            清除这台手机上的演示数据
           </PrimaryButton>
         )}
       </div>

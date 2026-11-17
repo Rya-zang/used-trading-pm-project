@@ -220,6 +220,33 @@ export function simulateTheirAcceptance(personId: string) {
   });
 }
 
+export function receiveTheirApplication(personId: string) {
+  const current = applicationStore.getSnapshot();
+  const previous = current[personId];
+  applicationStore.write({
+    ...current,
+    [personId]: {
+      myAccepted: previous?.myAccepted ?? false,
+      theirAccepted: true,
+      updatedAt: new Date().toISOString(),
+    },
+  });
+}
+
+export function acceptTheirApplication(personId: string) {
+  const current = applicationStore.getSnapshot();
+  const previous = current[personId];
+  if (!previous?.theirAccepted) return;
+  applicationStore.write({
+    ...current,
+    [personId]: {
+      myAccepted: true,
+      theirAccepted: true,
+      updatedAt: new Date().toISOString(),
+    },
+  });
+}
+
 export function sendMessage(personId: string, text: string) {
   const trimmed = text.trim();
   if (!trimmed) return;

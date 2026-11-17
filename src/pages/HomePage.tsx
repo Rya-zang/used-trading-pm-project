@@ -3,8 +3,10 @@ import { Card } from "../components/Card.tsx";
 import { PageShell } from "../components/PageShell.tsx";
 import { Tag } from "../components/Tag.tsx";
 import { labelOf, rentalModes } from "../domain/catalog.ts";
+import { pairOf, useDemo } from "../domain/demoStore.ts";
+import { roommateCandidates } from "../domain/people.ts";
 import { draftInProgress } from "../domain/profile.ts";
-import { clearDraft, useOnboardingDraft, useSavedProfile } from "../domain/storage.ts";
+import { clearDraft, isMutual, useApplications, useOnboardingDraft, useSavedProfile } from "../domain/storage.ts";
 
 const linkClass =
   "block rounded-card focus-visible:ring-2 focus-visible:ring-warm focus-visible:ring-offset-2 focus-visible:ring-offset-cream";
@@ -12,7 +14,10 @@ const linkClass =
 export function HomePage() {
   const profile = useSavedProfile();
   const draft = useOnboardingDraft();
+  const applications = useApplications();
+  const demo = useDemo();
   const continuing = !profile && draftInProgress(draft);
+  const mutuals = roommateCandidates.filter((person) => isMutual(applications[person.id]));
 
   return (
     <PageShell>
@@ -45,6 +50,40 @@ export function HomePage() {
                 </Card>
               </Link>
             </li>
+            <li>
+              <Link to="/housing" className={linkClass}>
+                <Card>
+                  <div className="flex items-start justify-between gap-2">
+                    <h3 className="text-base leading-6 font-medium">去找房</h3>
+                    <span aria-hidden="true" className="text-warm">
+                      →
+                    </span>
+                  </div>
+                  <p className="mt-2 text-sm leading-6">
+                    {profile.rentalMode === "has-listing" ? "写下自己的房间，或看看谁来申请。" : "看已有的房间，或和匹配的人一起找。"}
+                  </p>
+                </Card>
+              </Link>
+            </li>
+            {mutuals.map((person) => {
+              const pair = pairOf(demo, person.id);
+              const living = pair.myMoveIn && pair.theirMoveIn;
+              return (
+                <li key={person.id}>
+                  <Link to={living ? `/space/${person.id}` : `/together/${person.id}`} className={linkClass}>
+                    <Card>
+                      <div className="flex items-start justify-between gap-2">
+                        <h3 className="text-base leading-6 font-medium">和{person.nickname}继续</h3>
+                        <span aria-hidden="true" className="text-warm">
+                          →
+                        </span>
+                      </div>
+                      <p className="mt-2 text-sm leading-6">{living ? "打开合租空间" : "看房、租金、约法"}</p>
+                    </Card>
+                  </Link>
+                </li>
+              );
+            })}
             <li>
               <Link to="/onboarding?edit=1" className={linkClass}>
                 <Card>
@@ -110,23 +149,30 @@ export function HomePage() {
             </Link>
           </li>
           <li>
-            <Card>
-              <Tag tone="quiet">还没做</Tag>
-              <h3 className="mt-2 text-base font-medium">找房</h3>
-              <p className="mt-2 text-sm leading-6">还不能发布或浏览房源，也还不能约看房。</p>
-            </Card>
+            <Link to="/housing" className={linkClass}>
+              <Card>
+                <Tag>可以看</Tag>
+                <div className="mt-2 flex items-start justify-between gap-2">
+                  <h3 className="text-base font-medium">找房</h3>
+                  <span aria-hidden="true" className="text-warm">
+                    →
+                  </span>
+                </div>
+                <p className="mt-2 text-sm leading-6">已经有房就写下房间。还没有房，就和对方一起看示例房源、约时间。</p>
+              </Card>
+            </Link>
           </li>
           <li>
             <Link to="/space" className={linkClass}>
               <Card>
-                <Tag tone="quiet">还没做</Tag>
+                <Tag>可以看</Tag>
                 <div className="mt-2 flex items-start justify-between gap-2">
                   <h3 className="text-base font-medium">合租空间</h3>
                   <span aria-hidden="true" className="text-warm">
                     →
                   </span>
                 </div>
-                <p className="mt-2 text-sm leading-6">里面仍是占位。还没有公约、分摊或住在一起之后的工具。</p>
+                <p className="mt-2 text-sm leading-6">决定住在一起之后，可以写约定、发一句轻轻的话、留提醒、记家务。没有分数。</p>
               </Card>
             </Link>
           </li>
