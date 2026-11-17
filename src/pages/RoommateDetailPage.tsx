@@ -43,7 +43,7 @@ export function RoommateDetailPage() {
 
   return (
     <PageShell title={person.nickname} mainClassName={profile && !blocked ? shellClass : undefined}>
-      <Link to="/roommates" className="text-sm text-warm">
+      <Link to="/roommates" className="text-sm text-[#858585]">
         ← 返回建议
       </Link>
       <div className="mt-4 flex items-center gap-3">
@@ -91,8 +91,8 @@ export function RoommateDetailPage() {
         </div>
       ) : null}
 
-      <section className="mt-6">
-        <h2 className="text-base font-medium">对方的资料</h2>
+      <section className="panel mt-6 p-4">
+        <h2 className="text-[15px] font-semibold">对方的资料</h2>
         <div className="mt-2">
           <ProfileFacts person={person} />
         </div>

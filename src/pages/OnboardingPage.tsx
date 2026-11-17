@@ -358,8 +358,8 @@ function StepBody({
                 aria-checked={selected}
                 onClick={() => update({ mbti: item })}
                 className={[
-                  "h-11 rounded-input text-sm focus-visible:ring-2 focus-visible:ring-warm",
-                  selected ? "bg-sage text-white" : "border border-oat bg-white text-ink",
+                  "h-11 rounded-xl text-sm focus-visible:ring-2 focus-visible:ring-[#C9855A]",
+                  selected ? "bg-[#C9855A] text-white" : "border border-[#EAEAE6] bg-white text-[#252525]",
                 ].join(" ")}
               >
                 {item}
@@ -408,8 +408,8 @@ function AvatarPicker({
               aria-label={avatar.label}
               onClick={() => onChange(avatar.id)}
               className={[
-                "flex h-16 items-center justify-center rounded-card focus-visible:ring-2 focus-visible:ring-warm",
-                selected ? "ring-2 ring-ink" : "",
+                "flex h-16 items-center justify-center rounded-2xl focus-visible:ring-2 focus-visible:ring-[#C9855A]",
+                selected ? "ring-2 ring-[#C9855A]" : "",
               ].join(" ")}
             >
               <Avatar id={avatar.id} gender={gender} />

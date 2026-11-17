@@ -1,15 +1,10 @@
 import { MBTI_DISCLAIMER, SCORE_DISCLAIMER } from "../domain/catalog.ts";
 import { tierLabel, type MatchExplanation, type MatchTier } from "../domain/match.ts";
-import { Tag } from "./Tag.tsx";
 
-const tierTone: Record<MatchTier, "sage" | "warm" | "quiet"> = {
-  "both-fit": "sage",
-  "housing-fit-habits-differ": "warm",
-  "talk-more": "quiet",
-};
+const chip = "inline-flex items-center rounded-full bg-[#FAFAF8] px-2 py-1 text-[11px] leading-4 text-[#858585]";
 
 export function TierTag({ tier }: { tier: MatchTier }) {
-  return <Tag tone={tierTone[tier]}>{tierLabel[tier]}</Tag>;
+  return <span className={chip}>{tierLabel[tier]}</span>;
 }
 
 export function ScoreParts({ match }: { match: MatchExplanation }) {
@@ -42,7 +37,7 @@ export function ScoreCard({ match }: { match: MatchExplanation }) {
   return (
     <section aria-label="资料参考">
       <div className="flex items-end justify-between gap-3">
-        <p className="text-4xl font-semibold tabular-nums">{match.total}%</p>
+        <p className="text-4xl font-semibold tabular-nums text-[#C9855A]">{match.total}%</p>
         <TierTag tier={match.tier} />
       </div>
       <p className="mt-2 text-sm leading-6 text-warm">{SCORE_DISCLAIMER}</p>
@@ -66,10 +61,10 @@ export function ScoreCard({ match }: { match: MatchExplanation }) {
       </div>
       <div className="mt-4">
         <h3 className="text-sm text-warm">比较接近的地方</h3>
-        <ul className="mt-2 flex flex-wrap gap-2">
+        <ul className="mt-2 flex flex-wrap gap-1.5">
           {match.highlights.map((item) => (
-            <li key={item}>
-              <Tag>{item}</Tag>
+            <li key={item} className={chip}>
+              {item}
             </li>
           ))}
         </ul>
