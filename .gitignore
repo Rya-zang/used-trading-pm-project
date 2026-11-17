@@ -26,3 +26,13 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Vite / Node (appended for the Roommate Match shell)
+dist-ssr/
+*.local
+.vite/
+node_modules/
+*.log
+.DS_Store
+.env.*
+.cache/
