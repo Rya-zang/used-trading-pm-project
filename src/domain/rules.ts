@@ -71,11 +71,12 @@ export function emptyRules(): RulesState {
 }
 
 export function hardLinesReady(lines: readonly RuleLine[]): boolean {
-  const hard = lines.filter((line) => line.level === "never" || line.level === "avoid");
+  const hard = lines.filter((line) => line.topic !== "另外一句");
   if (hard.length !== 3) return false;
   const topics = hard.map((line) => line.topic.trim());
   if (topics.some((topic) => topic.length === 0 || topic.length > 12)) return false;
   if (hard.some((line) => line.text.trim().length === 0 || line.text.trim().length > 40)) return false;
+  if (hard.some((line) => line.level !== "never" && line.level !== "avoid" && line.level !== "talk")) return false;
   return new Set(topics).size === topics.length;
 }
 

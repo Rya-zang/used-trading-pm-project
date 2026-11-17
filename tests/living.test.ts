@@ -166,6 +166,13 @@ describe("约法三章", () => {
     assert.equal(viewRules(stopped).stopsMatch, true);
     const accepted = acceptTheirTopic(stopped, "吸烟", "t3");
     assert.equal(viewRules(accepted).stopsMatch, false);
+    const custom = submitMyRules(emptyRules(), [
+      { id: "1", topic: "不要在公共场合", text: "不要在公共场合内吸烟", level: "never", custom: true },
+      { id: "2", topic: "深夜声音", text: "晚上 11 点后把声音放轻", level: "avoid", custom: false },
+      { id: "3", topic: "客人过夜", text: "客人过夜要先说一声", level: "talk", custom: false },
+    ], "t4");
+    assert.equal(custom.mine[0]?.text, "不要在公共场合内吸烟");
+    assert.equal(viewRules(custom).revealed, false);
     assert.equal(viewRules(accepted).shared.some((item) => item.topic === "吸烟"), true);
     assert.ok(accepted.history.length >= 2);
   });
