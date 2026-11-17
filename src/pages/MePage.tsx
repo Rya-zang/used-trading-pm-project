@@ -26,7 +26,7 @@ export function MePage() {
     return (
       <PageShell title="我的">
         <h1 className="text-2xl font-semibold">我的</h1>
-        <p className="mt-2 text-sm leading-6">还没有资料。填好之后会留在这台手机上。</p>
+        <p className="mt-2 text-sm leading-6">还没有资料。先去填写，才能看室友和房间。</p>
         <div className="mt-6">
           <PrimaryButton to="/onboarding">去填写</PrimaryButton>
         </div>
@@ -45,7 +45,7 @@ export function MePage() {
           </p>
         </div>
       </div>
-      <p className="mt-4 text-sm leading-6 text-warm">这些资料保存在这台手机上，刷新后还在。</p>
+      <p className="mt-4 text-sm leading-6 text-warm">资料已经记下。</p>
       <div className="mt-4">
         <ProfileFacts person={profile} />
       </div>
@@ -86,7 +86,7 @@ export function MePage() {
         <PrimaryButton to="/onboarding?edit=1">修改资料</PrimaryButton>
         {confirmClear ? (
           <>
-            <p className="text-sm leading-6">会清掉资料、申请、聊天、上班地点、周边和值日表，以及这台手机上的房间、看房、租金、约法和合租空间。</p>
+            <p className="text-sm leading-6">会清掉资料、申请、聊天、上班地点、周边、值日表，以及房间、看房、租金、约法和合租空间。</p>
             <PrimaryButton
               variant="quiet"
               onClick={() => {
@@ -103,7 +103,7 @@ export function MePage() {
           </>
         ) : (
           <PrimaryButton variant="quiet" onClick={() => setConfirmClear(true)}>
-            清除这台手机上的演示数据
+            清除已保存的内容
           </PrimaryButton>
         )}
       </div>

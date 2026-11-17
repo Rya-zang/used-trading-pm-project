@@ -54,7 +54,7 @@ export function RulesPage() {
           ← 返回和{person?.nickname}的安排
         </Link>
         <h1 className="mt-4 text-2xl font-semibold">住在一起之前，先说好这些事。</h1>
-        <p className="mt-2 text-sm leading-6">这是你们过日子之前说好的话，不是合同，也没有人来惩罚。双方都写好之前，先不对照。</p>
+        <p className="mt-2 text-sm leading-6">先把日子里在意的事说清楚。双方都写好之前，先不对照。</p>
         <div className="mt-6 flex flex-col gap-4">
           {slots.map((slot, index) => (
             <fieldset key={index} className="panel p-4">
@@ -100,7 +100,7 @@ export function RulesPage() {
         <div className="mt-4 flex flex-col gap-2">
           <PrimaryButton onClick={submit}>我写好了</PrimaryButton>
           <PrimaryButton variant="quiet" onClick={() => simulateTheirRuleSheet(personId)}>
-            模拟对方也写好
+            对方也写好了
           </PrimaryButton>
         </div>
         {!view.revealed ? <p className="mt-4 text-sm leading-6">对方写好之前，你只能看到自己的，看不到对照。</p> : null}
@@ -250,7 +250,7 @@ function ConflictActions({ personId, pair }: { personId: string; pair: TopicPair
         没法同意
       </PrimaryButton>
       <PrimaryButton variant="quiet" onClick={() => refuseRule(personId, pair.topic, "them")}>
-        模拟对方也没法同意
+        对方也没法同意
       </PrimaryButton>
     </div>
   );

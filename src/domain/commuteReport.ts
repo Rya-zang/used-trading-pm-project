@@ -6,9 +6,9 @@ import type { CommuteReport } from "../server/amap.ts";
 export type { CommuteReport };
 
 const noteCopy = {
-  "missing-key": "地图钥匙还没配上，下面仍是示例距离和周边标签。",
+  "missing-key": "距离和周边先按记下的地点来算。",
   amap: "距离和周边按高德来算。",
-  "amap-unavailable": "高德这次没有回应，下面仍是示例距离和周边标签。",
+  "amap-unavailable": "这次没有算出新的距离，下面仍按记下的地点来算。",
 } as const;
 
 export function commuteNote(note: CommuteReport["note"] | "pending"): string | null {

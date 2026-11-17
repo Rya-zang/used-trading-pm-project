@@ -45,7 +45,7 @@ export function RoomDetailPage() {
       <p className="mt-2 text-sm leading-6">
         {mine ? profile?.nickname ?? "我" : owner?.nickname ?? "室友"} · {placeLabel(room.cityId, room.areaId)}
       </p>
-      <p className="mt-1 text-sm leading-6 text-warm">{room.address}。这是假地址，没有地图。</p>
+      <p className="mt-1 text-sm leading-6 text-warm">{room.address}</p>
       <div className="mt-4 grid grid-cols-2 gap-2">
         {room.photos.map((photo) => (
           <PhotoTile key={photo} id={photo} large />
@@ -61,7 +61,6 @@ export function RoomDetailPage() {
       <RoomBlock title="自己住的房间" spot={room.ownRoom} />
       <RoomBlock title="空给室友的房间" spot={room.roommateRoom} />
       <p className="mt-4 text-sm leading-6">{room.requirements || "没有额外要求。"}</p>
-      <p className="mt-2 text-sm leading-6 text-warm">租金是演示数字，不会扣款。</p>
       <div className="mt-6 flex flex-col gap-2">
         {mine ? <PrimaryButton to="/housing/publish">修改房间</PrimaryButton> : null}
         {!mine ? (
@@ -73,7 +72,7 @@ export function RoomDetailPage() {
           <PrimaryButton onClick={() => applyToPerson(owner.id)}>申请这间房</PrimaryButton>
         ) : null}
         {!mine && owner && record?.myAccepted && !record.theirAccepted ? (
-          <PrimaryButton onClick={() => simulateTheirAcceptance(owner.id)}>模拟对方同意</PrimaryButton>
+          <PrimaryButton onClick={() => simulateTheirAcceptance(owner.id)}>对方已同意</PrimaryButton>
         ) : null}
         {!mine && owner && mutual ? <PrimaryButton to={`/together/${owner.id}`}>约看房、谈租金</PrimaryButton> : null}
       </div>

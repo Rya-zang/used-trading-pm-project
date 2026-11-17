@@ -68,7 +68,7 @@ export function PublishRoomPage() {
   function save() {
     const room = toRoom();
     if (!room) {
-      setError("把小区、地址、城市片区、租金、面积、两间房和至少一张示例照片填上。");
+      setError("把小区、地址、城市片区、租金、面积、两间房和至少一张照片填上。");
       return;
     }
     saveMyRoom(room);
@@ -109,10 +109,10 @@ export function PublishRoomPage() {
   return (
     <PageShell title="写下房间">
       <h1 className="text-2xl font-semibold">写下我的房间</h1>
-      <p className="mt-2 text-sm leading-6 text-warm">这些数字和地址都是假的，只为了把合租演示走通。没有真实房源，也没有地图。</p>
+      <p className="mt-2 text-sm leading-6 text-warm">写下小区、地址、租金，以及你住的房间和空给室友的房间。</p>
       <div className="mt-6 flex flex-col gap-4">
         <TextField id="community" label="小区" value={community} onChange={setCommunity} placeholder="比如：衡复小路" />
-        <TextField id="address" label="示例地址" value={address} onChange={setAddress} placeholder="示例路 18 号" />
+        <TextField id="address" label="地址" value={address} onChange={setAddress} placeholder="比如：衡复路 18 号" />
         <SelectField
           id="city"
           label="城市"
@@ -152,7 +152,7 @@ export function PublishRoomPage() {
           />
         </label>
         <fieldset>
-          <legend className="mb-2 text-sm text-warm">示例照片</legend>
+          <legend className="mb-2 text-sm text-warm">照片</legend>
           <div className="grid grid-cols-2 gap-2">
             {photoPresets.map((photo) => {
               const selected = photos.includes(photo.id);
