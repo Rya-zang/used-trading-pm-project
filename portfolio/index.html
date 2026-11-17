@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>臧金淑 · C端 / AI 产品经理实习</title>
+  <meta name="description" content="臧金淑，正在寻找 C端产品经理或 AI产品经理实习。可实习6个月，可立即到岗。个人项目：顺心，合租室友匹配。">
+  <style>
+    :root {
+      --bg: #F3F0E8;
+      --ink: #1A1916;
+      --muted: #6F6B64;
+      --label: #5C7383;
+      --line: #E0DBD0;
+      --card: #ffffff;
+      color-scheme: light;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { height: 100%; }
+
+    body {
+      margin: 0;
+      min-height: 100%;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: Inter, "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", "Source Han Sans SC", "Microsoft YaHei", "WenQuanYi Micro Hei", "Droid Sans Fallback", sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    h1, h2, h3, p { margin: 0; }
+
+    ::selection {
+      background: var(--ink);
+      color: var(--bg);
+    }
+
+    .page {
+      width: min(980px, calc(100% - 3rem));
+      margin: 0 auto;
+      padding: 4.25rem 0 5.5rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(3.25rem, 12vw, 6.5rem);
+      font-weight: 600;
+      letter-spacing: -0.045em;
+      line-height: 0.95;
+    }
+
+    .seek {
+      margin-top: 1.5rem;
+      max-width: 22em;
+      color: var(--muted);
+      font-size: 1.125rem;
+      line-height: 1.65;
+      text-wrap: pretty;
+    }
+
+    .keep { white-space: nowrap; }
+
+    .avail {
+      margin-top: 0.4rem;
+      color: var(--ink);
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    .project { margin-top: 4.75rem; }
+
+    .kicker {
+      color: var(--label);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .project h2 {
+      margin-top: 1rem;
+      font-size: clamp(2.75rem, 9vw, 5.25rem);
+      font-weight: 600;
+      letter-spacing: -0.045em;
+      line-height: 0.98;
+    }
+
+    .subtitle {
+      margin-top: 0.85rem;
+      color: var(--muted);
+      font-size: 1.25rem;
+      line-height: 1.4;
+    }
+
+    .desc {
+      margin-top: 1.15rem;
+      max-width: 38em;
+      color: var(--muted);
+      font-size: 1.02rem;
+      line-height: 1.75;
+      text-wrap: pretty;
+    }
+
+    .rule {
+      margin: 2.5rem 0;
+      border: 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .card {
+      display: grid;
+      grid-template-columns: 1fr;
+      background: var(--card);
+      border: 1px solid rgba(26, 25, 22, 0.06);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .col { padding: 1.6rem 1.35rem 1.85rem; }
+
+    .col + .col { border-top: 1px solid var(--line); }
+
+    .col h3 {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      line-height: 1.2;
+    }
+
+    .col p {
+      margin-top: 0.9rem;
+      max-width: 28em;
+      font-size: 1.02rem;
+      line-height: 1.75;
+      text-wrap: pretty;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      margin-top: 1.35rem;
+      padding: 0 1.2rem;
+      border-radius: 999px;
+      background: #141414;
+      color: #fff;
+      font-size: 0.95rem;
+      font-weight: 500;
+      line-height: 1;
+      text-decoration: none;
+    }
+
+    .pill:hover { background: #000; }
+
+    .pill:focus-visible {
+      outline: 2px solid #141414;
+      outline-offset: 3px;
+    }
+
+    @media (min-width: 760px) {
+      .page {
+        width: min(980px, calc(100% - 6rem));
+        padding: 6.5rem 0 7.5rem;
+      }
+
+      .project { margin-top: 6.25rem; }
+
+      .card { grid-template-columns: 1fr 1fr; }
+
+      .col { padding: 2.5rem 2.6rem 2.75rem; }
+
+      .col + .col {
+        border-top: 0;
+        border-left: 1px solid var(--line);
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <h1>臧金淑</h1>
+      <p class="seek"><span class="keep">正在寻找 C端产品经理</span><span class="keep">或 AI产品经理实习。</span></p>
+      <p class="avail">可实习6个月，可立即到岗。</p>
+    </header>
+
+    <section class="project" aria-labelledby="project-title">
+      <p class="kicker">01 / PERSONAL PROJECT</p>
+      <h2 id="project-title">顺心</h2>
+      <p class="subtitle">合租室友匹配</p>
+      <p class="desc">两条路径：<span class="keep">已有房</span>找<span class="keep">室友</span>，或先<span class="keep">匹配</span>再一起<span class="keep">找房</span>。按<span class="keep">生活习惯</span>做<span class="keep">合拍匹配</span>；匹配后一起<span class="keep">搜房</span>、<span class="keep">看房</span>、<span class="keep">分摊租金</span>，并写下<span class="keep">房屋规矩</span>。</p>
+      <hr class="rule">
+      <div class="card">
+        <div class="col">
+          <h3>LOGIC</h3>
+          <p><span class="keep">对照生活习惯、通勤和房屋规矩，</span><span class="keep">再给一份合拍解读。</span></p>
+        </div>
+        <div class="col">
+          <h3>DEMO</h3>
+          <p>已上线可体验。</p>
+          <a class="pill" href="https://fleet-onyx-bp20toq.tmp.now" target="_blank" rel="noopener noreferrer">打开 Demo</a>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
