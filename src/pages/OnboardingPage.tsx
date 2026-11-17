@@ -12,6 +12,7 @@ import {
   avatars,
   budgetBands,
   cities,
+  choreStyles,
   cleanlinessHabits,
   cookingHabits,
   coupleAcceptances,
@@ -26,6 +27,7 @@ import {
   relationships,
   rentalModes,
   sleepHabits,
+  smokingHabits,
   socialHabits,
   type CityId,
 } from "../domain/catalog.ts";
@@ -46,7 +48,7 @@ const steps = [
   { title: "现在有没有房源", lead: "先记下来。保存之后可以去写自己的房间，或和对方一起看示例房源。" },
   { title: "希望室友是", lead: "这一项会直接决定谁能出现，不会拿来加分。" },
   { title: "伴侣和人数", lead: "能否接受情侣、想几个人住，也会直接筛掉对不上的人。" },
-  { title: "生活习惯", lead: "作息、整洁、在家见朋友和做饭，会算进资料参考。" },
+  { title: "生活习惯", lead: "作息、整洁、吸烟、家务做法和做饭都会写进资料，也能拿来对照。" },
   { title: "性格标签", lead: `${MBTI_DISCLAIMER}可以不选。` },
   { title: "看一遍再保存", lead: "保存之后会留在这台手机上，刷新也不会丢。" },
 ] as const;
@@ -321,6 +323,20 @@ function StepBody({
           options={cookingHabits}
           onChange={(cooking) => update({ cooking })}
         />
+        <ChoiceGroup
+          label="吸烟"
+          name="smoking"
+          value={draft.smoking}
+          options={smokingHabits}
+          onChange={(smoking) => update({ smoking })}
+        />
+        <ChoiceGroup
+          label="家务做法"
+          name="chore-style"
+          value={draft.choreStyle}
+          options={choreStyles}
+          onChange={(choreStyle) => update({ choreStyle })}
+        />
       </div>
     );
   }
@@ -427,6 +443,8 @@ function ConfirmSummary({ draft }: { draft: OnboardingDraft }) {
     ["整洁", draft.cleanliness ? labelOf(cleanlinessHabits, draft.cleanliness) : "未填"],
     ["在家见朋友", draft.social ? labelOf(socialHabits, draft.social) : "未填"],
     ["做饭", draft.cooking ? labelOf(cookingHabits, draft.cooking) : "未填"],
+    ["吸烟", draft.smoking ? labelOf(smokingHabits, draft.smoking) : "未填"],
+    ["家务做法", draft.choreStyle ? labelOf(choreStyles, draft.choreStyle) : "未填"],
     ["MBTI", draft.mbti ?? "未填写"],
   ];
 

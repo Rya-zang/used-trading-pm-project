@@ -1,6 +1,7 @@
 import { useSyncExternalStore } from "react";
 import { isRentalMode } from "./catalog.ts";
 import { isNearbyId, isWorkplaceId, type NearbyId, type WorkplaceId } from "./commute.ts";
+import { emptyRoster, nextRosterCell, parseRoster, type RosterChoreId, type WeekRoster } from "./roster.ts";
 import {
   draftFromProfile,
   draftInProgress,
@@ -18,6 +19,7 @@ const MESSAGES_KEY = "shunxin.messages.v1";
 const MIN_SCORE_KEY = "shunxin.min-score.v1";
 const WORKPLACE_KEY = "shunxin.workplace.v1";
 const WISHES_KEY = "shunxin.wishes.v1";
+const ROSTER_KEY = "shunxin.roster.v1";
 
 export const CURRENT_USER_ID = "me";
 export const DEFAULT_MIN_SCORE = 40;
@@ -148,6 +150,7 @@ const messageStore = createStore<readonly ChatMessage[]>(MESSAGES_KEY, [], parse
 const minScoreStore = createStore<number>(MIN_SCORE_KEY, DEFAULT_MIN_SCORE, parseMinScore);
 const workplaceStore = createStore<SavedWorkplace | null>(WORKPLACE_KEY, null, parseWorkplace);
 const wishesStore = createStore<SavedWishes>(WISHES_KEY, emptyWishes(), parseWishes);
+const rosterStore = createStore<Record<string, WeekRoster>>(ROSTER_KEY, {}, parseRosterMap);
 
 function useStore<T>(store: {
   subscribe: (listener: () => void) => () => void;
@@ -226,6 +229,28 @@ export function saveWorkplace(workplace: SavedWorkplace) {
 
 export function saveWishes(wishes: SavedWishes) {
   wishesStore.write(wishes);
+}
+
+function parseRosterMap(value: unknown): Record<string, WeekRoster> | null {
+  if (!value || typeof value !== "object") return null;
+  const next: Record<string, WeekRoster> = {};
+  for (const [personId, roster] of Object.entries(value as Record<string, unknown>)) {
+    const parsed = parseRoster(roster);
+    if (parsed) next[personId] = parsed;
+  }
+  return next;
+}
+
+export function useRoster(personId: string): WeekRoster {
+  const all = useStore(rosterStore);
+  return all[personId] ?? emptyRoster();
+}
+
+export function cycleRoster(personId: string, chore: RosterChoreId, day: number) {
+  const all = rosterStore.getSnapshot();
+  const current = all[personId] ?? emptyRoster();
+  const row = current[chore].map((cell, index) => (index === day ? nextRosterCell(cell) : cell));
+  rosterStore.write({ ...all, [personId]: { ...current, [chore]: row } });
 }
 
 export function saveProfile(profile: RoommateProfile) {
@@ -325,6 +350,7 @@ export function clearLocalRoommateData() {
   minScoreStore.reset();
   workplaceStore.reset();
   wishesStore.reset();
+  rosterStore.reset();
 }
 
 export function initialDraftFromLocation(search: string): OnboardingDraft {

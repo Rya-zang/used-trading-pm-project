@@ -8,9 +8,11 @@ import {
   moveInOptions,
   placeLabel,
   rentalModes,
+  choreStyles,
   cleanlinessHabits,
   cookingHabits,
   sleepHabits,
+  smokingHabits,
   socialHabits,
 } from "../domain/catalog.ts";
 import type { RoommateProfile } from "../domain/profile.ts";
@@ -48,6 +50,8 @@ export function ProfileFacts({ person }: { person: RoommateProfile }) {
         <Row label="整洁" value={labelOf(cleanlinessHabits, person.cleanliness)} />
         <Row label="在家见朋友" value={labelOf(socialHabits, person.social)} />
         <Row label="做饭" value={labelOf(cookingHabits, person.cooking)} />
+        <Row label="吸烟" value={labelOf(smokingHabits, person.smoking)} />
+        <Row label="家务做法" value={labelOf(choreStyles, person.choreStyle)} />
         <Row label="MBTI" value={person.mbti ?? "未填写"} />
       </dl>
     </div>

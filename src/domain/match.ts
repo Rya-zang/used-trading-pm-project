@@ -1,10 +1,14 @@
 import {
   budgetBands,
+  choreStyles,
   cleanlinessHabits,
   cookingHabits,
   householdSizes,
+  labelOf,
   moveInOptions,
+  placeLabel,
   sleepHabits,
+  smokingHabits,
   socialHabits,
   type HouseholdSize,
 } from "./catalog.ts";
@@ -28,6 +32,21 @@ const PERSONALITY_WHEN_MISSING = 8;
 
 export type MatchTier = "both-fit" | "housing-fit-habits-differ" | "talk-more";
 export type HardBlock = "gender" | "couple" | "household";
+export type ComfortTone = "same" | "near" | "apart" | "open";
+
+export interface ComfortLine {
+  key: string;
+  label: string;
+  tone: ComfortTone;
+  sentence: string;
+}
+
+export const comfortToneLabel: Record<ComfortTone, string> = {
+  same: "比较一致",
+  near: "有一点差别",
+  apart: "不太一样",
+  open: "还不好说",
+};
 
 export interface MatchExplanation {
   total: number;
@@ -47,6 +66,7 @@ export interface MatchExplanation {
   couple: string;
   household: string;
   personalityNote: string;
+  comfort: readonly ComfortLine[];
 }
 
 export interface Suggestion {
@@ -255,10 +275,14 @@ function buildNotes(
   if (me.mbti && them.mbti && parts.personality <= 6) {
     conflicts.push("性格标签差得比较多（不是科学结论）");
   }
+  if (me.smoking !== them.smoking) conflicts.unshift("一个不吸烟，一个会吸烟");
+  else highlights.push(me.smoking === "no" ? "都不吸烟" : "都会吸烟");
+  if (me.choreStyle !== them.choreStyle) conflicts.unshift("家务做法不一样");
+  else highlights.push("家务做法一样");
 
   return {
     highlights: highlights.length > 0 ? highlights.slice(0, 8) : ["可以先从自我介绍聊起"],
-    conflicts: conflicts.length > 0 ? conflicts.slice(0, 4) : ["资料里没有特别要提前说开的差别"],
+    conflicts: conflicts.length > 0 ? conflicts.slice(0, 6) : ["资料里没有特别要提前说开的差别"],
   };
 }
 
@@ -297,6 +321,7 @@ export function explainMatch(me: RoommateProfile, them: RoommateProfile): MatchE
     me.mbti && them.mbti
       ? "按四个字母相同的个数给分，只作参考。"
       : "有人没填 MBTI，这一项按 8 分计，避免空白把参考分拉得太低。";
+  const comfort = comfortLines(me, them, { area, budget, moveIn, sleep, cleanliness, social, cooking, personality });
 
   return {
     total: housing + habits + personality,
@@ -316,7 +341,143 @@ export function explainMatch(me: RoommateProfile, them: RoommateProfile): MatchE
     couple: coupleText(me, them),
     household: householdText(me, them),
     personalityNote,
+    comfort,
   };
+}
+
+function toneFromScore(score: number, max: number): ComfortTone {
+  if (score === max) return "same";
+  if (score === 0) return "apart";
+  return "near";
+}
+
+function comfortLines(
+  me: RoommateProfile,
+  them: RoommateProfile,
+  parts: {
+    area: number;
+    budget: number;
+    moveIn: number;
+    sleep: number;
+    cleanliness: number;
+    social: number;
+    cooking: number;
+    personality: number;
+  },
+): ComfortLine[] {
+  const minePlace = placeLabel(me.cityId, me.areaId);
+  const theirPlace = placeLabel(them.cityId, them.areaId);
+  const areaTone = toneFromScore(parts.area, SCORE_WEIGHTS.area);
+  const area: ComfortLine = {
+    key: "area",
+    label: "片区",
+    tone: areaTone === "apart" && me.cityId === them.cityId ? "near" : areaTone,
+    sentence:
+      me.areaId === them.areaId
+        ? `都想住在${minePlace}。`
+        : me.cityId === them.cityId
+          ? `都在一座城市。你选${minePlace}，对方选${theirPlace}。`
+          : `你想住${minePlace}，对方想住${theirPlace}。`,
+  };
+  const myBudget = labelOf(budgetBands, me.budget);
+  const theirBudget = labelOf(budgetBands, them.budget);
+  const budget: ComfortLine = {
+    key: "budget",
+    label: "预算",
+    tone: toneFromScore(parts.budget, SCORE_WEIGHTS.budget),
+    sentence: me.budget === them.budget ? `预算都是${myBudget}。` : `你是${myBudget}，对方是${theirBudget}。`,
+  };
+  const myMove = labelOf(moveInOptions, me.moveIn);
+  const theirMove = labelOf(moveInOptions, them.moveIn);
+  const moveIn: ComfortLine = {
+    key: "moveIn",
+    label: "入住时间",
+    tone: toneFromScore(parts.moveIn, SCORE_WEIGHTS.moveIn),
+    sentence:
+      parts.moveIn === SCORE_WEIGHTS.moveIn
+        ? "入住时间对得上。"
+        : `你是${myMove}，对方是${theirMove}。`,
+  };
+  const habit = (
+    key: string,
+    label: string,
+    mine: string,
+    theirs: string,
+    score: number,
+    max: number,
+  ): ComfortLine => ({
+    key,
+    label,
+    tone: toneFromScore(score, max),
+    sentence: mine === theirs ? `都是${mine}。` : `你是${mine}，对方是${theirs}。`,
+  });
+  const smoking: ComfortLine = {
+    key: "smoking",
+    label: "吸烟",
+    tone: me.smoking === them.smoking ? "same" : "apart",
+    sentence:
+      me.smoking === them.smoking
+        ? me.smoking === "no"
+          ? "都不吸烟。"
+          : "都会吸烟。"
+        : `一个${labelOf(smokingHabits, me.smoking)}，一个${labelOf(smokingHabits, them.smoking)}。`,
+  };
+  const choreOrder = choreStyles.map((item) => item.id);
+  const choreDistance = Math.abs(choreOrder.indexOf(me.choreStyle) - choreOrder.indexOf(them.choreStyle));
+  const myChore = labelOf(choreStyles, me.choreStyle);
+  const theirChore = labelOf(choreStyles, them.choreStyle);
+  const chore: ComfortLine = {
+    key: "chore",
+    label: "家务做法",
+    tone: choreDistance === 0 ? "same" : choreDistance === 1 ? "near" : "apart",
+    sentence: choreDistance === 0 ? `家务都是${myChore}。` : `你是${myChore}，对方是${theirChore}。`,
+  };
+  let personality: ComfortLine;
+  if (!me.mbti || !them.mbti) {
+    personality = {
+      key: "personality",
+      label: "性格标签",
+      tone: "open",
+      sentence: "有一边没填性格标签。MBTI 不是科学标准，不拿来判断合不合适。",
+    };
+  } else {
+    let shared = 0;
+    for (let index = 0; index < 4; index += 1) {
+      if (me.mbti[index] === them.mbti[index]) shared += 1;
+    }
+    personality = {
+      key: "personality",
+      label: "性格标签",
+      tone: shared >= 3 ? "same" : shared === 2 ? "near" : "apart",
+      sentence: `你填${me.mbti}，对方填${them.mbti}，有 ${shared} 个字母一样。这不是科学结论。`,
+    };
+  }
+  return [
+    area,
+    budget,
+    moveIn,
+    habit("sleep", "作息", labelOf(sleepHabits, me.sleep), labelOf(sleepHabits, them.sleep), parts.sleep, SCORE_WEIGHTS.sleep),
+    habit(
+      "cleanliness",
+      "整洁",
+      labelOf(cleanlinessHabits, me.cleanliness),
+      labelOf(cleanlinessHabits, them.cleanliness),
+      parts.cleanliness,
+      SCORE_WEIGHTS.cleanliness,
+    ),
+    habit("social", "在家见朋友", labelOf(socialHabits, me.social), labelOf(socialHabits, them.social), parts.social, SCORE_WEIGHTS.social),
+    habit(
+      "cooking",
+      "做饭",
+      labelOf(cookingHabits, me.cooking),
+      labelOf(cookingHabits, them.cooking),
+      parts.cooking,
+      SCORE_WEIGHTS.cooking,
+    ),
+    smoking,
+    chore,
+    personality,
+  ];
 }
 
 export function suggestRoommates(

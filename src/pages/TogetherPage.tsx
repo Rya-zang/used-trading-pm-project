@@ -1,5 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 import { Avatar } from "../components/Avatar.tsx";
+import { ChoreRoster } from "../components/ChoreRoster.tsx";
 import { Card } from "../components/Card.tsx";
 import { MutualGate } from "../components/MutualGate.tsx";
 import { PageShell } from "../components/PageShell.tsx";
@@ -72,6 +73,9 @@ export function TogetherPage() {
             >
               模拟对方也决定
             </PrimaryButton>
+          </div>
+          <div className="mt-8">
+            <ChoreRoster personId={personId} />
           </div>
           {pair.myMoveIn && pair.theirMoveIn ? (
             <div className="mt-3">

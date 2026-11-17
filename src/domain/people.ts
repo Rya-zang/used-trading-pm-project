@@ -23,6 +23,8 @@ export const roommateCandidates: readonly RoommateProfile[] = [
     cleanliness: "normal",
     social: "sometimes",
     cooking: "sometimes",
+    smoking: "no",
+    choreStyle: "rotate",
     mbti: "INFP",
   },
   {
@@ -46,6 +48,8 @@ export const roommateCandidates: readonly RoommateProfile[] = [
     cleanliness: "relaxed",
     social: "often",
     cooking: "rarely",
+    smoking: "yes",
+    choreStyle: "split",
     mbti: "ESTP",
   },
   {
@@ -69,6 +73,8 @@ export const roommateCandidates: readonly RoommateProfile[] = [
     cleanliness: "normal",
     social: "sometimes",
     cooking: "often",
+    smoking: "no",
+    choreStyle: "together",
     mbti: "ENFP",
   },
   {
@@ -92,6 +98,8 @@ export const roommateCandidates: readonly RoommateProfile[] = [
     cleanliness: "tidy",
     social: "quiet",
     cooking: "often",
+    smoking: "no",
+    choreStyle: "rotate",
     mbti: "ISFJ",
   },
   {
@@ -115,6 +123,8 @@ export const roommateCandidates: readonly RoommateProfile[] = [
     cleanliness: "tidy",
     social: "quiet",
     cooking: "often",
+    smoking: "no",
+    choreStyle: "together",
     mbti: "INFJ",
   },
   {
@@ -138,6 +148,8 @@ export const roommateCandidates: readonly RoommateProfile[] = [
     cleanliness: "relaxed",
     social: "sometimes",
     cooking: "sometimes",
+    smoking: "yes",
+    choreStyle: "split",
     mbti: null,
   },
   {
@@ -161,6 +173,8 @@ export const roommateCandidates: readonly RoommateProfile[] = [
     cleanliness: "normal",
     social: "sometimes",
     cooking: "sometimes",
+    smoking: "no",
+    choreStyle: "rotate",
     mbti: "INTP",
   },
   {
@@ -184,6 +198,8 @@ export const roommateCandidates: readonly RoommateProfile[] = [
     cleanliness: "tidy",
     social: "sometimes",
     cooking: "sometimes",
+    smoking: "no",
+    choreStyle: "together",
     mbti: "ENTJ",
   },
   {
@@ -207,6 +223,8 @@ export const roommateCandidates: readonly RoommateProfile[] = [
     cleanliness: "tidy",
     social: "quiet",
     cooking: "rarely",
+    smoking: "yes",
+    choreStyle: "split",
     mbti: "INTJ",
   },
   {
@@ -230,6 +248,8 @@ export const roommateCandidates: readonly RoommateProfile[] = [
     cleanliness: "relaxed",
     social: "often",
     cooking: "rarely",
+    smoking: "no",
+    choreStyle: "rotate",
     mbti: "ESTJ",
   },
   {
@@ -253,6 +273,8 @@ export const roommateCandidates: readonly RoommateProfile[] = [
     cleanliness: "normal",
     social: "sometimes",
     cooking: "sometimes",
+    smoking: "no",
+    choreStyle: "together",
     mbti: "ISTJ",
   },
   {
@@ -276,6 +298,8 @@ export const roommateCandidates: readonly RoommateProfile[] = [
     cleanliness: "normal",
     social: "sometimes",
     cooking: "sometimes",
+    smoking: "yes",
+    choreStyle: "split",
     mbti: "ENFJ",
   },
 ];
@@ -303,6 +327,8 @@ export const testRoommates: readonly RoommateProfile[] = [
     cleanliness: "tidy",
     social: "quiet",
     cooking: "often",
+    smoking: "no",
+    choreStyle: "rotate",
     mbti: null,
   },
   {
@@ -326,6 +352,8 @@ export const testRoommates: readonly RoommateProfile[] = [
     cleanliness: "relaxed",
     social: "often",
     cooking: "rarely",
+    smoking: "yes",
+    choreStyle: "split",
     mbti: "ENTP",
   },
   {
@@ -349,6 +377,8 @@ export const testRoommates: readonly RoommateProfile[] = [
     cleanliness: "normal",
     social: "sometimes",
     cooking: "sometimes",
+    smoking: "no",
+    choreStyle: "together",
     mbti: "ISFJ",
   },
 ];

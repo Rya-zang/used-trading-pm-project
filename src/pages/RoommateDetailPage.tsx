@@ -102,7 +102,12 @@ export function RoommateDetailPage() {
 
       {mutual ? (
         <div className="mt-6">
-          <PrimaryButton to={`/together/${person.id}`}>继续看房、租金和约法</PrimaryButton>
+            <PrimaryButton to={`/together/${person.id}`}>继续看房、租金和约法</PrimaryButton>
+            <div className="mt-2">
+              <PrimaryButton to={`/together/${person.id}#roster`} variant="quiet">
+                排这周的值日
+              </PrimaryButton>
+            </div>
         </div>
       ) : null}
 

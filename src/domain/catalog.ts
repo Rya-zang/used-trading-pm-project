@@ -126,6 +126,17 @@ export const cookingHabits = [
   { id: "rarely", label: "基本不做饭" },
 ] as const;
 
+export const smokingHabits = [
+  { id: "no", label: "不吸烟" },
+  { id: "yes", label: "会吸烟" },
+] as const;
+
+export const choreStyles = [
+  { id: "rotate", label: "轮流值日" },
+  { id: "together", label: "愿意一起做" },
+  { id: "split", label: "各做各的" },
+] as const;
+
 export const mbtiTypes = [
   "INTJ",
   "INTP",
@@ -176,6 +187,8 @@ export type SleepHabit = (typeof sleepHabits)[number]["id"];
 export type CleanlinessHabit = (typeof cleanlinessHabits)[number]["id"];
 export type SocialHabit = (typeof socialHabits)[number]["id"];
 export type CookingHabit = (typeof cookingHabits)[number]["id"];
+export type SmokingHabit = (typeof smokingHabits)[number]["id"];
+export type ChoreStyle = (typeof choreStyles)[number]["id"];
 export type MbtiType = (typeof mbtiTypes)[number];
 export type AvatarId = (typeof avatars)[number]["id"];
 
@@ -244,6 +257,14 @@ export function isSocialHabit(value: unknown): value is SocialHabit {
 
 export function isCookingHabit(value: unknown): value is CookingHabit {
   return hasId(cookingHabits, value);
+}
+
+export function isSmokingHabit(value: unknown): value is SmokingHabit {
+  return hasId(smokingHabits, value);
+}
+
+export function isChoreStyle(value: unknown): value is ChoreStyle {
+  return hasId(choreStyles, value);
 }
 
 export function isMbtiType(value: unknown): value is MbtiType {
