@@ -177,7 +177,7 @@ export function saveProfile(profile: RoommateProfile) {
 }
 
 export function saveDraft(draft: OnboardingDraft) {
-  draftStore.write(draft);
+  draftStore.write({ ...draft, flowVersion: 2 } as OnboardingDraft);
 }
 
 export function clearDraft() {
