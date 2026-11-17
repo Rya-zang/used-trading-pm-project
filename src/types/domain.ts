@@ -1,4 +1,4 @@
-/** 已经有房源，或还没有房源、想一起租。阶段 3 才会让人选择。 */
+/** 已经有房源，或还没有房源、想一起租。 */
 export type RentalModeId = "has-listing" | "seek-together";
 
 export interface RentalMode {
@@ -25,7 +25,7 @@ export interface Listing {
   ownerProfileId: string;
 }
 
-/** 两个人之间的一条匹配展示。阶段 2 不计算它。 */
+/** 早期占位。室友建议的计分在 domain/match.ts，不使用这个类型。 */
 export interface MatchResult {
   id: string;
   profileId: string;

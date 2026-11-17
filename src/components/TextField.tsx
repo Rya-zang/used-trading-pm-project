@@ -7,6 +7,11 @@ export function TextField({
   value,
   placeholder,
   disabled = false,
+  invalid = false,
+  type = "text",
+  inputMode,
+  maxLength,
+  autoComplete,
   onChange,
 }: {
   id: string;
@@ -15,6 +20,11 @@ export function TextField({
   value?: string;
   placeholder?: string;
   disabled?: boolean;
+  invalid?: boolean;
+  type?: "text" | "number";
+  inputMode?: "text" | "numeric";
+  maxLength?: number;
+  autoComplete?: string;
   onChange?: (value: string) => void;
 }) {
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
@@ -30,8 +40,16 @@ export function TextField({
         value={value}
         placeholder={placeholder}
         disabled={disabled}
+        type={type}
+        inputMode={inputMode}
+        maxLength={maxLength}
+        autoComplete={autoComplete}
+        aria-invalid={invalid || undefined}
         onChange={handleChange}
-        className="h-12 w-full rounded-input border border-oat bg-cream px-3 text-base text-ink outline-none placeholder:text-muted focus-visible:border-warm"
+        className={[
+          "h-12 w-full rounded-input border bg-cream px-3 text-base text-ink outline-none placeholder:text-muted focus-visible:border-warm",
+          invalid ? "border-error" : "border-oat",
+        ].join(" ")}
       />
     </label>
   );
