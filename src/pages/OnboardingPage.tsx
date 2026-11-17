@@ -42,7 +42,6 @@ const shellClass = "flex-1 px-5 pt-[max(1.25rem,env(safe-area-inset-top))] pb-44
 
 const steps = [
   { title: "你是谁", lead: "昵称会显示给对方。年龄和性别用来筛选室友。" },
-  { title: "一句介绍", lead: "可以不写。写了会显示在资料里。" },
   { title: "想住在哪里", lead: "城市、片区、预算和入住时间会算进资料参考。" },
   { title: "现在有没有房源", lead: "先记下来。保存之后可以去写自己的房间，或和对方一起看示例房源。" },
   { title: "希望室友是", lead: "这一项会直接决定谁能出现，不会拿来加分。" },
@@ -188,30 +187,12 @@ function StepBody({
           options={genders}
           onChange={(gender) => update({ gender })}
         />
-        <AvatarPicker value={draft.avatarId} onChange={(avatarId) => update({ avatarId })} />
+        <AvatarPicker value={draft.avatarId} gender={draft.gender} onChange={(avatarId) => update({ avatarId })} />
       </div>
     );
   }
 
   if (draft.step === 1) {
-    return (
-      <label htmlFor="bio" className="block text-sm">
-        <span className="mb-2 block text-warm">介绍（选填）</span>
-        <textarea
-          id="bio"
-          value={draft.bio}
-          maxLength={80}
-          rows={4}
-          placeholder="用一两句说说你平时怎么生活。"
-          onChange={(event) => update({ bio: event.target.value.slice(0, 80) })}
-          className="w-full rounded-input border border-oat bg-cream px-3 py-3 text-base text-ink outline-none placeholder:text-muted focus-visible:border-warm"
-        />
-        <span className="mt-2 block text-warm">{draft.bio.trim().length}/80</span>
-      </label>
-    );
-  }
-
-  if (draft.step === 2) {
     return (
       <div className="flex flex-col gap-4">
         <ChoiceGroup
@@ -248,7 +229,7 @@ function StepBody({
     );
   }
 
-  if (draft.step === 3) {
+  if (draft.step === 2) {
     return (
       <ChoiceGroup
         label="租房方式"
@@ -260,7 +241,7 @@ function StepBody({
     );
   }
 
-  if (draft.step === 4) {
+  if (draft.step === 3) {
     return (
       <ChoiceGroup
         label="希望一起住的人是"
@@ -272,7 +253,7 @@ function StepBody({
     );
   }
 
-  if (draft.step === 5) {
+  if (draft.step === 4) {
     return (
       <div className="flex flex-col gap-4">
         <ChoiceGroup
@@ -315,7 +296,7 @@ function StepBody({
     );
   }
 
-  if (draft.step === 6) {
+  if (draft.step === 5) {
     return (
       <div className="flex flex-col gap-4">
         <ChoiceGroup label="作息" name="sleep" value={draft.sleep} options={sleepHabits} onChange={(sleep) => update({ sleep })} />
@@ -344,7 +325,7 @@ function StepBody({
     );
   }
 
-  if (draft.step === 7) {
+  if (draft.step === 6) {
     return (
       <div>
         <div className="grid grid-cols-4 gap-2" role="radiogroup" aria-label="MBTI">
@@ -358,8 +339,8 @@ function StepBody({
                 aria-checked={selected}
                 onClick={() => update({ mbti: item })}
                 className={[
-                  "h-11 rounded-input text-sm focus-visible:ring-2 focus-visible:ring-warm",
-                  selected ? "bg-sage text-ink" : "bg-oat text-ink",
+                  "h-11 rounded-xl text-sm focus-visible:ring-2 focus-visible:ring-[#C9855A]",
+                  selected ? "bg-[#C9855A] text-white" : "border border-[#EAEAE6] bg-white text-[#252525]",
                 ].join(" ")}
               >
                 {item}
@@ -387,9 +368,11 @@ function cityPatch(draft: OnboardingDraft, cityId: CityId): Partial<OnboardingDr
 
 function AvatarPicker({
   value,
+  gender,
   onChange,
 }: {
   value: OnboardingDraft["avatarId"];
+  gender: OnboardingDraft["gender"];
   onChange: (avatarId: NonNullable<OnboardingDraft["avatarId"]>) => void;
 }) {
   return (
@@ -406,11 +389,11 @@ function AvatarPicker({
               aria-label={avatar.label}
               onClick={() => onChange(avatar.id)}
               className={[
-                "flex h-16 items-center justify-center rounded-card focus-visible:ring-2 focus-visible:ring-warm",
-                selected ? "ring-2 ring-ink" : "",
+                "flex h-16 items-center justify-center rounded-2xl focus-visible:ring-2 focus-visible:ring-[#C9855A]",
+                selected ? "ring-2 ring-[#C9855A]" : "",
               ].join(" ")}
             >
-              <Avatar id={avatar.id} />
+              <Avatar id={avatar.id} gender={gender} />
             </button>
           );
         })}
@@ -424,7 +407,7 @@ function ConfirmSummary({ draft }: { draft: OnboardingDraft }) {
     ["昵称", draft.nickname.trim() || "未填"],
     ["年龄", draft.age || "未填"],
     ["性别", draft.gender ? labelOf(genders, draft.gender) : "未填"],
-    ["介绍", draft.bio.trim() || "未写"],
+    ...(draft.bio.trim() ? [["介绍", draft.bio.trim()] as [string, string]] : []),
     ["地方", draft.cityId && draft.areaId ? placeLabel(draft.cityId, draft.areaId) : "未填"],
     ["预算", draft.budget ? labelOf(budgetBands, draft.budget) : "未填"],
     ["入住", draft.moveIn ? labelOf(moveInOptions, draft.moveIn) : "未填"],
@@ -449,7 +432,7 @@ function ConfirmSummary({ draft }: { draft: OnboardingDraft }) {
 
   return (
     <div>
-      {draft.avatarId ? <Avatar id={draft.avatarId} size="lg" /> : null}
+      {draft.avatarId ? <Avatar id={draft.avatarId} size="lg" gender={draft.gender} /> : null}
       <dl className="mt-4 divide-y divide-oat">
         {rows.map(([label, value]) => (
           <div key={label} className="flex items-start justify-between gap-3 py-2">

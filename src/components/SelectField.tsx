@@ -18,7 +18,7 @@ export function SelectField({
         id={id}
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        className="h-12 w-full rounded-input border border-oat bg-cream px-3 text-base text-ink outline-none focus-visible:border-warm"
+        className="h-12 w-full rounded-input border border-oat bg-white px-3 text-base text-ink outline-none focus-visible:border-sage"
       >
         {options.map((option) => (
           <option key={option.value} value={option.value}>

@@ -84,7 +84,7 @@ export interface OnboardingDraft {
   mbti: MbtiType | null;
 }
 
-export const ONBOARDING_STEP_COUNT = 9;
+export const ONBOARDING_STEP_COUNT = 8;
 
 export function emptyDraft(): OnboardingDraft {
   return {
@@ -153,18 +153,16 @@ export function stepError(draft: OnboardingDraft, step: number): string | null {
       return null;
     }
     case 1:
-      return bioError(draft.bio);
-    case 2:
       if (!draft.cityId) return "选一座城市。";
       if (!draft.areaId) return "选一个片区。";
       if (!draft.budget) return "选一个预算。";
       if (!draft.moveIn) return "选一个入住时间。";
       return null;
-    case 3:
+    case 2:
       return draft.rentalMode ? null : "选一种租房方式。";
-    case 4:
+    case 3:
       return draft.genderPreference ? null : "选你希望室友的性别。";
-    case 5:
+    case 4:
       if (!draft.relationship) return "选你现在是一个人住，还是有伴侣。";
       if (draft.relationship === "partner" && !draft.partnerMoveIn) {
         return "选伴侣会不会一起住。";
@@ -172,7 +170,7 @@ export function stepError(draft: OnboardingDraft, step: number): string | null {
       if (!draft.coupleAcceptance) return "选你能否接受情侣一起住。";
       if (!draft.householdSize) return "选希望几个人一起住。";
       return null;
-    case 6:
+    case 5:
       if (!draft.sleep || !draft.cleanliness || !draft.social || !draft.cooking) {
         return "四项生活习惯都选一下。";
       }
@@ -363,7 +361,9 @@ export function parseDraft(value: unknown): OnboardingDraft | null {
   if (!record) return null;
   const draft = emptyDraft();
   if (typeof record.step === "number" && Number.isInteger(record.step)) {
-    draft.step = Math.min(Math.max(record.step, 0), ONBOARDING_STEP_COUNT - 1);
+    let step = record.step;
+    if (record.flowVersion !== 2 && step > 1) step -= 1;
+    draft.step = Math.min(Math.max(step, 0), ONBOARDING_STEP_COUNT - 1);
   }
   draft.nickname = typeof record.nickname === "string" ? record.nickname.slice(0, 12) : "";
   draft.age = typeof record.age === "string" ? record.age.replace(/\D/g, "").slice(0, 2) : "";

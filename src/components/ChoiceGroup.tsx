@@ -21,8 +21,8 @@ export function ChoiceGroup<T extends string>({
             <label
               key={option.id}
               className={[
-                "block cursor-pointer rounded-card border px-3 py-3 focus-within:ring-2 focus-within:ring-warm",
-                selected ? "border-ink bg-sage" : "border-transparent bg-oat",
+                "block cursor-pointer rounded-2xl bg-white px-3 py-3 shadow-[0_8px_24px_rgba(37,37,37,0.05)] focus-within:ring-2 focus-within:ring-[#C9855A]",
+                selected ? "border-2 border-[#C9855A]" : "border border-[#EAEAE6]",
               ].join(" ")}
             >
               <input

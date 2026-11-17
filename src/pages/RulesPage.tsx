@@ -63,7 +63,7 @@ export function RulesPage() {
         <p className="mt-2 text-sm leading-6">这是你们过日子之前说好的话，不是合同，也没有人来惩罚。双方都写好之前，先不对照。</p>
         <div className="mt-6 flex flex-col gap-4">
           {slots.map((slot, index) => (
-            <fieldset key={index} className="rounded-card bg-oat p-4">
+            <fieldset key={index} className="panel p-4">
               <legend className="text-sm text-warm">硬性的第 {index + 1} 句</legend>
               <div className="mt-3 flex flex-col gap-3">
                 <SelectField
@@ -79,8 +79,8 @@ export function RulesPage() {
                 />
                 {slot.topic === "custom" ? (
                   <>
-                    <input value={slot.customTopic} onChange={(event) => updateSlot(index, { customTopic: event.target.value.slice(0, 12) })} placeholder="短标题" className="h-12 rounded-input border border-oat bg-cream px-3" />
-                    <input value={slot.customText} onChange={(event) => updateSlot(index, { customText: event.target.value.slice(0, 40) })} placeholder="想说的话" className="h-12 rounded-input border border-oat bg-cream px-3" />
+                    <input value={slot.customTopic} onChange={(event) => updateSlot(index, { customTopic: event.target.value.slice(0, 12) })} placeholder="短标题" className="h-12 rounded-input border border-oat bg-white px-3" />
+                    <input value={slot.customText} onChange={(event) => updateSlot(index, { customText: event.target.value.slice(0, 40) })} placeholder="想说的话" className="h-12 rounded-input border border-oat bg-white px-3" />
                   </>
                 ) : null}
                 <SelectField
@@ -100,7 +100,7 @@ export function RulesPage() {
           ))}
           <label className="text-sm" htmlFor="soft">
             <span className="mb-2 block text-warm">还可以加一句软一点的（可以商量）</span>
-            <input id="soft" value={soft} onChange={(event) => setSoft(event.target.value.slice(0, 40))} className="h-12 w-full rounded-input border border-oat bg-cream px-3" />
+            <input id="soft" value={soft} onChange={(event) => setSoft(event.target.value.slice(0, 40))} className="h-12 w-full rounded-input border border-oat bg-white px-3" />
           </label>
         </div>
         {error ? <p className="mt-3 text-sm text-error">{error}</p> : null}
@@ -198,7 +198,7 @@ function PairList({
       <h2 className="text-sm text-warm">{title}</h2>
       <ul className="mt-2 flex flex-col gap-3">
         {pairs.map((pair) => (
-          <li key={pair.topic} className="rounded-card bg-oat p-3">
+          <li key={pair.topic} className="panel p-3">
             <Tag>{pair.topic}</Tag>
             <p className="mt-2 text-sm leading-6">你：{lineText(pair.mine)}</p>
             <p className="text-sm leading-6">对方：{lineText(pair.theirs)}</p>
@@ -229,7 +229,7 @@ function ConflictActions({ personId, pair }: { personId: string; pair: TopicPair
         ]}
         onChange={(value) => setLevel(value as RuleLevel)}
       />
-      <input value={text} onChange={(event) => setText(event.target.value.slice(0, 40))} className="h-12 rounded-input border border-oat bg-cream px-3" />
+      <input value={text} onChange={(event) => setText(event.target.value.slice(0, 40))} className="h-12 rounded-input border border-oat bg-white px-3" />
       <PrimaryButton
         variant="quiet"
         onClick={() =>

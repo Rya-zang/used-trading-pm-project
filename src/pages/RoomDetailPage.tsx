@@ -83,7 +83,7 @@ export function RoomDetailPage() {
 
 function RoomBlock({ title, spot }: { title: string; spot: RoomSpot }) {
   return (
-    <section className="mt-4 rounded-card bg-oat p-4">
+    <section className="mt-4 panel p-4">
       <h2 className="text-base font-medium">{title}</h2>
       <p className="mt-2 text-sm leading-6">
         {spot.name} · {spot.areaSqm} ㎡ · {spot.rent} 元

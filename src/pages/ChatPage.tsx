@@ -58,12 +58,12 @@ export function ChatPage() {
 
   return (
     <PageShell title={`和${person.nickname}聊天`} mainClassName={shellClass}>
-      <Link to={`/roommates/${person.id}`} className={`flex items-center gap-3 ${linkClass}`}>
-        <Avatar id={person.avatarId} size="sm" />
-        <span>
-          <span className="block text-base font-medium">{person.nickname}</span>
-          <span className="block text-sm text-warm">
-            {person.age} 岁 · {labelOf(genders, person.gender)} · {placeLabel(person.cityId, person.areaId)}
+      <Link to={`/roommates/${person.id}`} className={`panel flex items-center gap-3 p-3.5 ${linkClass}`}>
+        <Avatar id={person.avatarId} size="sm" gender={person.gender} />
+        <span className="min-w-0">
+          <span className="block text-[15px] font-semibold">{person.nickname}</span>
+          <span className="mt-0.5 block text-xs text-[#858585]">
+            {person.age}岁 · {labelOf(genders, person.gender)} · {placeLabel(person.cityId, person.areaId)}
           </span>
         </span>
       </Link>
@@ -77,7 +77,7 @@ export function ChatPage() {
               key={label}
               type="button"
               onClick={() => setText(sentence)}
-              className="h-10 rounded-full bg-oat px-3 text-sm focus-visible:ring-2 focus-visible:ring-warm"
+              className="h-8 rounded-full border border-[#EAEAE6] bg-[#FAFAF8] px-3 text-xs text-[#858585] focus-visible:ring-2 focus-visible:ring-[#C9855A]"
             >
               {label}
             </button>
@@ -95,7 +95,7 @@ export function ChatPage() {
             <div
               className={[
                 "max-w-[80%] rounded-card px-3 py-2",
-                message.sender === "me" ? "bg-sage" : "bg-oat",
+                message.sender === "me" ? "bg-[#C9855A] text-white" : "border border-[#EAEAE6] bg-white shadow-[0_8px_24px_rgba(37,37,37,0.05)]",
               ].join(" ")}
             >
               <p className="text-base leading-6 break-words">{message.text}</p>
@@ -110,7 +110,7 @@ export function ChatPage() {
 
       <form
         onSubmit={onSubmit}
-        className="fixed inset-x-0 bottom-[calc(4rem+env(safe-area-inset-bottom))] z-20 border-t border-oat bg-cream"
+        className="fixed inset-x-0 bottom-[calc(4rem+env(safe-area-inset-bottom))] z-20 border-t border-[#eeeeea] bg-white"
       >
         <div className="mx-auto flex w-full max-w-[420px] items-end gap-2 px-5 py-3">
           <label htmlFor="chat-text" className="sr-only">
@@ -130,7 +130,7 @@ export function ChatPage() {
                 event.currentTarget.form?.requestSubmit();
               }
             }}
-            className="max-h-28 min-h-12 flex-1 resize-none rounded-input border border-oat bg-cream px-3 py-3 text-base outline-none focus-visible:border-warm"
+            className="max-h-28 min-h-12 flex-1 resize-none rounded-input border border-oat bg-white px-3 py-3 text-base outline-none focus-visible:border-sage"
           />
           <div className="w-20 shrink-0">
             <PrimaryButton type="submit" disabled={text.trim() === ""}>

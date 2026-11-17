@@ -148,7 +148,7 @@ export function PublishRoomPage() {
             maxLength={80}
             rows={3}
             onChange={(event) => setRequirements(event.target.value.slice(0, 80))}
-            className="w-full rounded-input border border-oat bg-cream px-3 py-3 text-base outline-none focus-visible:border-warm"
+            className="w-full rounded-input border border-oat bg-white px-3 py-3 text-base outline-none focus-visible:border-sage"
           />
         </label>
         <fieldset>
@@ -189,7 +189,7 @@ function SpotFields({
   onChange: (spot: SpotForm) => void;
 }) {
   return (
-    <fieldset className="rounded-card bg-oat p-4">
+    <fieldset className="panel p-4">
       <legend className="px-1 text-sm text-warm">{title}</legend>
       <div className="mt-3 flex flex-col gap-3">
         <TextField id={`${title}-name`} label="房间" value={spot.name} onChange={(name) => onChange({ ...spot, name })} />
