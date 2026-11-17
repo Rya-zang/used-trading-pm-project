@@ -98,6 +98,12 @@ export function RoommateDetailPage() {
         </div>
       </section>
 
+      {mutual ? (
+        <div className="mt-6">
+          <PrimaryButton to={`/together/${person.id}`}>继续看房、租金和约法</PrimaryButton>
+        </div>
+      ) : null}
+
       {profile && !blocked ? (
         <ActionBar>
           {mutual ? (

@@ -69,6 +69,24 @@ export function ChatPage() {
       </Link>
       {person.bio ? <p className="mt-3 text-sm leading-6">{person.bio}</p> : null}
       <p className="mt-2 text-sm text-warm">点上面可以看完整资料。这里没有真正的聊天服务器。</p>
+      <div className="mt-4">
+        <p className="text-sm leading-6 text-warm">可以先点一个话题，句子会填进输入框，你再自己发出去。</p>
+        <div className="mt-2 flex flex-wrap gap-2">
+          {chatTopics.map(([label, sentence]) => (
+            <button
+              key={label}
+              type="button"
+              onClick={() => setText(sentence)}
+              className="h-10 rounded-full bg-oat px-3 text-sm focus-visible:ring-2 focus-visible:ring-warm"
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+        <Link to={`/together/${person.id}`} className="mt-3 inline-flex min-h-11 items-center text-sm text-warm">
+          去看房、分租金、说约法
+        </Link>
+      </div>
 
       <div className="mt-6 flex flex-col gap-3">
         {messages.length === 0 ? <p className="text-sm leading-6 text-warm">还没有消息。写一句招呼吧。</p> : null}
@@ -124,6 +142,15 @@ export function ChatPage() {
     </PageShell>
   );
 }
+
+const chatTopics = [
+  ["房间", "想先聊聊房间。"],
+  ["租金", "租金想怎么分？"],
+  ["公共费用", "水电想另外算，不放进房租。"],
+  ["生活习惯", "作息和打扫也想对一下。"],
+  ["看房", "这周方便看房吗？"],
+  ["入住", "入住时间想对一下。"],
+] as const;
 
 function formatTime(value: string): string {
   const date = new Date(value);
