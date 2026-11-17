@@ -35,18 +35,12 @@ export function RulesPage() {
   const [error, setError] = useState<string | null>(null);
 
   function submit() {
-    const lines: RuleLine[] = slots.map((slot, index) => ({
-      id: `mine-${index}`,
-      topic: slot.topic === "custom" ? slot.customTopic.trim() : slot.topic,
-      text: slot.topic === "custom" ? slot.customText.trim() : presetText(slot.topic),
-      level: slot.level,
-      custom: slot.topic === "custom",
-    }));
+    const lines: RuleLine[] = slots.map((slot, index) => lineFromSlot(slot, index));
     if (soft.trim()) {
       lines.push({ id: "mine-soft", topic: "另外一句", text: soft.trim(), level: "talk", custom: true });
     }
     if (!hardLinesReady(lines)) {
-      setError("硬性的三句要选三件不同的事，程度是「绝不」或「尽量不要」。");
+      setError("三句都要写上，可以选一件事，也可以自己写。三件事情不能重复。");
       return;
     }
     saveMyRules(personId, lines);
@@ -71,18 +65,18 @@ export function RulesPage() {
                   label="哪一件事"
                   value={slot.topic}
                   options={[
-                    { value: "", label: "请选择" },
+                    { value: "", label: "可以不选，自己写" },
                     ...rulePresets.map((item) => ({ value: item.topic, label: item.topic })),
-                    { value: "custom", label: "自己写" },
                   ]}
-                  onChange={(topic) => setSlots(slots.map((item, itemIndex) => (itemIndex === index ? { ...item, topic } : item)))}
+                  onChange={(topic) => updateSlot(index, { topic })}
                 />
-                {slot.topic === "custom" ? (
-                  <>
-                    <input value={slot.customTopic} onChange={(event) => updateSlot(index, { customTopic: event.target.value.slice(0, 12) })} placeholder="短标题" className="h-12 rounded-input border border-oat bg-white px-3" />
-                    <input value={slot.customText} onChange={(event) => updateSlot(index, { customText: event.target.value.slice(0, 40) })} placeholder="想说的话" className="h-12 rounded-input border border-oat bg-white px-3" />
-                  </>
-                ) : null}
+                <input
+                  value={slot.customText}
+                  onChange={(event) => updateSlot(index, { customText: event.target.value.slice(0, 40) })}
+                  placeholder="比如：不要在公共场合内吸烟"
+                  aria-label={`第 ${index + 1} 句自己写`}
+                  className="h-12 rounded-input border border-oat bg-white px-3"
+                />
                 <SelectField
                   id={`level-${index}`}
                   label="到什么程度"
@@ -90,10 +84,9 @@ export function RulesPage() {
                   options={[
                     { value: "never", label: "绝不" },
                     { value: "avoid", label: "尽量不要" },
+                    { value: "talk", label: "可以商量" },
                   ]}
-                  onChange={(level) =>
-                    setSlots(slots.map((item, itemIndex) => (itemIndex === index ? { ...item, level: level === "never" ? "never" : "avoid" } : item)))
-                  }
+                  onChange={(level) => updateSlot(index, { level: level === "never" || level === "talk" ? level : "avoid" })}
                 />
               </div>
             </fieldset>
@@ -134,27 +127,36 @@ export function RulesPage() {
 
 interface RuleSlot {
   topic: string;
-  level: "never" | "avoid";
-  customTopic: string;
+  level: RuleLevel;
   customText: string;
 }
 
 function initialSlots(lines: RuleLine[]): RuleSlot[] {
-  const hard = lines.filter((line) => line.level !== "talk");
+  const hard = lines.filter((line) => line.topic !== "另外一句");
   return [0, 1, 2].map((index) => {
     const line = hard[index];
-    const preset = rulePresets.some((item) => item.topic === line?.topic);
+    const preset = rulePresets.find((item) => item.topic === line?.topic);
+    const ownWords = Boolean(line && line.text !== preset?.text);
     return {
-      topic: line ? (preset ? line.topic : "custom") : "",
-      level: line?.level === "never" ? "never" : "avoid",
-      customTopic: line && !preset ? line.topic : "",
-      customText: line && !preset ? line.text : "",
+      topic: preset ? (line?.topic ?? "") : "",
+      level: line?.level ?? "avoid",
+      customText: ownWords ? line.text : "",
     };
   });
 }
 
-function presetText(topic: string): string {
-  return rulePresets.find((item) => item.topic === topic)?.text ?? "";
+function lineFromSlot(slot: RuleSlot, index: number): RuleLine {
+  const typed = slot.customText.trim();
+  const preset = rulePresets.find((item) => item.topic === slot.topic);
+  const text = typed || preset?.text || "";
+  const topic = preset?.topic || typed.slice(0, 12);
+  return {
+    id: `mine-${index}`,
+    topic,
+    text,
+    level: slot.level,
+    custom: typed.length > 0 || !preset,
+  };
 }
 
 function Note({ rules }: { rules: ReturnType<typeof pairOf>["rules"] }) {
