@@ -1,17 +1,18 @@
-import { formatKm, listingMeets, rankListings, wishLabels, workplaceOf } from "../domain/commute.ts";
+import { formatKm, wishLabels } from "../domain/commute.ts";
+import { itemOf, useCommuteReport } from "../domain/commuteReport.ts";
 import type { FakeListing } from "../domain/places.ts";
 import { useSavedWishes, useSavedWorkplace } from "../domain/storage.ts";
 
 export function ListingCommute({ listing }: { listing: FakeListing }) {
   const workplace = useSavedWorkplace();
   const wishes = useSavedWishes();
+  const { report } = useCommuteReport();
   const labels = wishLabels(wishes.presets, wishes.custom);
   if (!workplace && labels.length === 0) return null;
-  const km = workplace
-    ? rankListings(workplaceOf(workplace.presetId)).find((item) => item.listing.id === listing.id)?.km
-    : null;
-  const met = labels.filter((wish) => listingMeets(listing, wish.id, wishes.custom));
-  const missed = labels.filter((wish) => !listingMeets(listing, wish.id, wishes.custom));
+  const item = itemOf(report.items, listing.id);
+  const km = item?.km ?? null;
+  const met = labels.filter((wish) => item?.met.includes(wish.id));
+  const missed = labels.filter((wish) => !item?.met.includes(wish.id));
   return (
     <div className="mt-2">
       {km !== undefined && km !== null ? <p className="text-sm font-medium text-[#C9855A]">离上班地点 {formatKm(km)}</p> : null}
