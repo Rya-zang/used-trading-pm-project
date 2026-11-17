@@ -21,6 +21,17 @@ import {
 const linkClass =
   "block rounded-card focus-visible:ring-2 focus-visible:ring-warm focus-visible:ring-offset-2 focus-visible:ring-offset-cream";
 
+function WorkplaceEntry() {
+  return (
+    <Link to="/housing/workplace" className={`${linkClass} mt-4 block`}>
+      <Card>
+        <h2 className="text-[15px] font-semibold">上班地点和周边</h2>
+        <p className="mt-1 text-xs leading-5 text-[#858585]">记下上班的地方，以及家里附近想有的地铁、小吃和其他。</p>
+      </Card>
+    </Link>
+  );
+}
+
 export function FindHousingPage() {
   const profile = useSavedProfile();
   const demo = useDemo();
@@ -34,6 +45,7 @@ export function FindHousingPage() {
         <div className="mt-6">
           <PrimaryButton to="/onboarding">去填写</PrimaryButton>
         </div>
+        <WorkplaceEntry />
       </PageShell>
     );
   }
@@ -44,6 +56,7 @@ export function FindHousingPage() {
     return (
       <PageShell title="找房">
         <h1 className="text-2xl font-semibold">我的房间</h1>
+        <WorkplaceEntry />
         <p className="mt-2 text-sm leading-6 text-warm">地址是写给演示看的，不会打开地图，也不会发给中介。</p>
         {demo.myRoom ? (
           <Link to={`/housing/rooms/${demo.myRoom.id}`} className={`${linkClass} mt-4 block`}>
@@ -117,6 +130,7 @@ export function FindHousingPage() {
   return (
     <PageShell title="找房">
       <h1 className="text-2xl font-semibold">找房</h1>
+      <WorkplaceEntry />
       <p className="mt-2 text-sm leading-6">
         可以先看已经有房的人，也可以和匹配好的人一起把找房标准说清楚，再看示例房源。
       </p>

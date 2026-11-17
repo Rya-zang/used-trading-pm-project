@@ -19,6 +19,7 @@ import { SeekTogetherPage } from "./pages/SeekTogetherPage.tsx";
 import { SharedSpacePage } from "./pages/SharedSpacePage.tsx";
 import { TogetherPage } from "./pages/TogetherPage.tsx";
 import { ViewingPage } from "./pages/ViewingPage.tsx";
+import { WorkplacePage } from "./pages/WorkplacePage.tsx";
 
 export function App() {
   return (
@@ -33,6 +34,7 @@ export function App() {
         <Route path="/housing/rooms/:roomId" element={<RoomDetailPage />} />
         <Route path="/housing/listings/:personId/:listingId" element={<ListingDetailPage />} />
         <Route path="/housing/listings/:personId" element={<ListingsPage />} />
+        <Route path="/housing/workplace" element={<WorkplacePage />} />
         <Route path="/housing" element={<FindHousingPage />} />
         <Route path="/together/:personId/viewing" element={<ViewingPage />} />
         <Route path="/together/:personId/search" element={<SearchStandardPage />} />

@@ -7,7 +7,7 @@ import { ProfileFacts } from "../components/ProfileFacts.tsx";
 import { ScoreCard } from "../components/ScoreCard.tsx";
 import { genders, labelOf, placeLabel } from "../domain/catalog.ts";
 import { explainMatch, hardBlockLabel, hardBlocks } from "../domain/match.ts";
-import { findCandidate } from "../domain/people.ts";
+import { findCandidate, isTestRoommate } from "../domain/people.ts";
 import {
   applyToPerson,
   isMutual,
@@ -38,11 +38,12 @@ export function RoommateDetailPage() {
 
   const application = applications[person.id];
   const mutual = isMutual(application);
+  const testing = isTestRoommate(person.id);
   const blocks = profile ? hardBlocks(profile, person) : [];
-  const blocked = blocks.length > 0 && !mutual;
+  const blocked = blocks.length > 0 && !mutual && !testing;
 
   return (
-    <PageShell title={person.nickname} mainClassName={profile && !blocked ? shellClass : undefined}>
+    <PageShell title={person.nickname} mainClassName={testing || (profile && !blocked) ? shellClass : undefined}>
       <Link to="/roommates" className="text-sm text-[#858585]">
         ← 返回建议
       </Link>
@@ -50,6 +51,7 @@ export function RoommateDetailPage() {
         <Avatar id={person.avatarId} size="lg" gender={person.gender} />
         <div>
           <h1 className="text-2xl font-semibold">{person.nickname}</h1>
+          {testing ? <p className="mt-1 text-xs text-[#C9855A]">测试用户</p> : null}
           <p className="mt-1 text-sm leading-6">
             {person.age} 岁 · {labelOf(genders, person.gender)}
           </p>
@@ -104,7 +106,13 @@ export function RoommateDetailPage() {
         </div>
       ) : null}
 
-      {profile && !blocked ? (
+      {testing ? (
+        <ActionBar>
+          <div className="min-w-0 flex-1">
+            <PrimaryButton to={`/roommates/${person.id}/chat`}>去聊天</PrimaryButton>
+          </div>
+        </ActionBar>
+      ) : profile && !blocked ? (
         <ActionBar>
           {mutual ? (
             <div className="min-w-0 flex-1">

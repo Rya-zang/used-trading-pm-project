@@ -4,9 +4,20 @@ import { Card } from "../components/Card.tsx";
 import { PageShell } from "../components/PageShell.tsx";
 import { PrimaryButton } from "../components/PrimaryButton.tsx";
 import { ScoreParts, TierTag } from "../components/ScoreCard.tsx";
-import { genders, labelOf, placeLabel, rentalModes, SCORE_DISCLAIMER } from "../domain/catalog.ts";
+import {
+  budgetBands,
+  cleanlinessHabits,
+  cookingHabits,
+  genders,
+  labelOf,
+  placeLabel,
+  rentalModes,
+  SCORE_DISCLAIMER,
+  sleepHabits,
+  socialHabits,
+} from "../domain/catalog.ts";
 import { hardBlocks, suggestRoommates } from "../domain/match.ts";
-import { roommateCandidates } from "../domain/people.ts";
+import { roommateCandidates, testRoommates } from "../domain/people.ts";
 import type { RoommateProfile } from "../domain/profile.ts";
 import { isMutual, setMinScore, useApplications, useMinScore, useSavedProfile } from "../domain/storage.ts";
 
@@ -40,6 +51,7 @@ export function FindRoommatesPage() {
     return (
       <PageShell title="找室友">
         <h1 className="text-2xl font-semibold">找室友</h1>
+        <TestUsers />
         <div className="panel mt-4 p-4">
           <h2 className="text-[15px] font-semibold">先写好自己的资料</h2>
           <p className="mt-2 text-sm leading-6 text-[#858585]">看室友建议之前，需要知道你是谁、想怎么住。资料会留在这台手机上。</p>
@@ -59,6 +71,7 @@ export function FindRoommatesPage() {
   return (
     <PageShell title="找室友">
       <h1 className="text-2xl font-semibold">室友建议</h1>
+      <TestUsers />
       <p className="mt-2 text-sm leading-6">
         下面是示例室友，用来演示，不是正在找房的真人。性别、能否接受情侣、一起住的人数对不上的人不会出现。
       </p>
@@ -144,6 +157,49 @@ export function FindRoommatesPage() {
         </ul>
       )}
     </PageShell>
+  );
+}
+
+function TestUsers() {
+  return (
+    <section className="mt-6">
+      <h2 className="text-[15px] font-semibold">测试用户</h2>
+      <p className="mt-1 text-xs leading-5 text-[#858585]">这几位已经可以聊天，不用等双方同意。消息留在这台手机上。</p>
+      <ul className="mt-3 flex flex-col gap-3">
+        {testRoommates.map((person) => (
+          <li key={person.id}>
+            <Link to={`/roommates/${person.id}`} className={linkClass}>
+              <Card>
+                <div className="flex gap-3">
+                  <Avatar id={person.avatarId} gender={person.gender} />
+                  <div className="min-w-0 flex-1">
+                    <h3 className="text-[15px] font-semibold">
+                      {person.nickname}
+                      <span className="ml-1.5 text-xs font-normal text-[#C9855A]">测试用户</span>
+                    </h3>
+                    <p className="mt-0.5 text-xs text-[#858585]">
+                      {placeLabel(person.cityId, person.areaId)} · {labelOf(budgetBands, person.budget)}
+                    </p>
+                    <ul className="mt-2 flex flex-wrap gap-1.5">
+                      {[
+                        labelOf(sleepHabits, person.sleep),
+                        labelOf(cleanlinessHabits, person.cleanliness),
+                        labelOf(socialHabits, person.social),
+                        labelOf(cookingHabits, person.cooking),
+                      ].map((habit) => (
+                        <li key={habit} className={chip}>
+                          {habit}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </Card>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </section>
   );
 }
 
