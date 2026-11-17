@@ -25,6 +25,8 @@ const viewer: RoommateProfile = {
   cleanliness: "normal",
   social: "sometimes",
   cooking: "sometimes",
+  smoking: "no",
+  choreStyle: "rotate",
   mbti: "INFP",
 };
 
@@ -161,6 +163,21 @@ describe("参考分", () => {
     assert.equal(match.moveIn, 0);
     assert.equal(match.total, 33);
     assert.ok(match.conflicts.includes("不在同一座城市"));
+  });
+
+  it("吸烟和家务做法会分开说明，不改原来的百分比", () => {
+    const match = explainMatch(viewer, candidate("zhou-yuan"));
+    assert.equal(match.total, 100);
+    const smoking = match.comfort.find((item) => item.key === "smoking");
+    const chore = match.comfort.find((item) => item.key === "chore");
+    assert.equal(smoking?.tone, "same");
+    assert.equal(smoking?.sentence, "都不吸烟。");
+    assert.equal(chore?.tone, "same");
+    const apart = explainMatch(viewer, candidate("chen-yu"));
+    assert.equal(apart.comfort.find((item) => item.key === "smoking")?.tone, "apart");
+    assert.match(apart.comfort.find((item) => item.key === "smoking")?.sentence ?? "", /不吸烟/);
+    assert.equal(apart.comfort.find((item) => item.key === "chore")?.tone, "apart");
+    assert.equal(apart.total, 73);
   });
 });
 

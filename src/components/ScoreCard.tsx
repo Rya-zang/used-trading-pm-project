@@ -1,5 +1,5 @@
 import { MBTI_DISCLAIMER, SCORE_DISCLAIMER } from "../domain/catalog.ts";
-import { tierLabel, type MatchExplanation, type MatchTier } from "../domain/match.ts";
+import { comfortToneLabel, tierLabel, type MatchExplanation, type MatchTier } from "../domain/match.ts";
 
 const chip = "inline-flex items-center rounded-full bg-[#FAFAF8] px-2 py-1 text-[11px] leading-4 text-[#858585]";
 
@@ -28,7 +28,7 @@ function Meter({ value, max }: { value: number; max: number }) {
   const width = Math.max(0, Math.min(100, Math.round((value / max) * 100)));
   return (
     <div className="mt-2 h-2 overflow-hidden rounded-full bg-[#eeeeea]" aria-hidden="true">
-      <div className="h-full rounded-full bg-sage" style={{ width: `${width}%` }} />
+      <div className="h-full rounded-full bg-[#C9855A]" style={{ width: `${width}%` }} />
     </div>
   );
 }
@@ -41,6 +41,25 @@ export function ScoreCard({ match }: { match: MatchExplanation }) {
         <TierTag tier={match.tier} />
       </div>
       <p className="mt-2 text-sm leading-6 text-warm">{SCORE_DISCLAIMER}</p>
+      <div className="panel mt-4 p-4">
+        <h3 className="text-[15px] font-semibold">相处舒服</h3>
+        <p className="mt-1 text-xs leading-5 text-[#858585]">
+          按片区、预算、入住、习惯、吸烟和家务做法分开看。性格标签可以不填，也不当成科学结论。
+        </p>
+        <ul className="mt-3 divide-y divide-[#EEEEEA]">
+          {match.comfort.map((line) => (
+            <li key={line.key} className="py-3">
+              <div className="flex items-center justify-between gap-3">
+                <p className="text-sm">{line.label}</p>
+                <p className={line.tone === "apart" ? "text-xs text-[#C9855A]" : "text-xs text-[#858585]"}>
+                  {comfortToneLabel[line.tone]}
+                </p>
+              </div>
+              <p className="mt-1 text-sm leading-6">{line.sentence}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
       <div className="mt-4 flex flex-col gap-3">
         <div>
           <p className="text-sm">住房需求 {match.housing}/50</p>

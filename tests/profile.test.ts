@@ -24,6 +24,8 @@ const profile: RoommateProfile = {
   cleanliness: "normal",
   social: "sometimes",
   cooking: "sometimes",
+  smoking: "no",
+  choreStyle: "rotate",
   mbti: null,
 };
 
@@ -32,6 +34,15 @@ describe("资料保存", () => {
     const saved = draftToProfile(draftFromProfile(profile), "me");
     assert.deepEqual(saved, profile);
     assert.deepEqual(parseProfile(JSON.parse(JSON.stringify(profile))), profile);
+  });
+
+  it("旧资料没有吸烟和家务做法时，按不吸烟、轮流值日读出来", () => {
+    const old = { ...profile } as Partial<typeof profile>;
+    delete old.smoking;
+    delete old.choreStyle;
+    const parsed = parseProfile(old);
+    assert.equal(parsed?.smoking, "no");
+    assert.equal(parsed?.choreStyle, "rotate");
   });
 
   it("一个人住却写了伴侣入住，读的时候丢掉", () => {

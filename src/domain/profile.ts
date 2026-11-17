@@ -5,6 +5,7 @@ import {
   isBudgetBand,
   isCityId,
   isCleanlinessHabit,
+  isChoreStyle,
   isCookingHabit,
   isCoupleAcceptance,
   isGender,
@@ -16,8 +17,11 @@ import {
   isRelationship,
   isRentalMode,
   isSleepHabit,
+  isSmokingHabit,
   isSocialHabit,
   type AreaId,
+  type ChoreStyle,
+  type SmokingHabit,
   type AvatarId,
   type BudgetBand,
   type CityId,
@@ -57,6 +61,8 @@ export interface RoommateProfile {
   cleanliness: CleanlinessHabit;
   social: SocialHabit;
   cooking: CookingHabit;
+  smoking: SmokingHabit;
+  choreStyle: ChoreStyle;
   mbti: MbtiType | null;
 }
 
@@ -81,6 +87,8 @@ export interface OnboardingDraft {
   cleanliness: CleanlinessHabit | null;
   social: SocialHabit | null;
   cooking: CookingHabit | null;
+  smoking: SmokingHabit | null;
+  choreStyle: ChoreStyle | null;
   mbti: MbtiType | null;
 }
 
@@ -108,6 +116,8 @@ export function emptyDraft(): OnboardingDraft {
     cleanliness: null,
     social: null,
     cooking: null,
+    smoking: null,
+    choreStyle: null,
     mbti: null,
   };
 }
@@ -171,8 +181,8 @@ export function stepError(draft: OnboardingDraft, step: number): string | null {
       if (!draft.householdSize) return "选希望几个人一起住。";
       return null;
     case 5:
-      if (!draft.sleep || !draft.cleanliness || !draft.social || !draft.cooking) {
-        return "四项生活习惯都选一下。";
+      if (!draft.sleep || !draft.cleanliness || !draft.social || !draft.cooking || !draft.smoking || !draft.choreStyle) {
+        return "生活习惯都选一下。";
       }
       return null;
     default:
@@ -208,7 +218,9 @@ export function draftToProfile(draft: OnboardingDraft, id: string): RoommateProf
     !draft.sleep ||
     !draft.cleanliness ||
     !draft.social ||
-    !draft.cooking
+    !draft.cooking ||
+    !draft.smoking ||
+    !draft.choreStyle
   ) {
     return null;
   }
@@ -241,6 +253,8 @@ export function draftToProfile(draft: OnboardingDraft, id: string): RoommateProf
     cleanliness: draft.cleanliness,
     social: draft.social,
     cooking: draft.cooking,
+    smoking: draft.smoking,
+    choreStyle: draft.choreStyle,
     mbti: draft.mbti,
   };
 }
@@ -267,6 +281,8 @@ export function draftFromProfile(profile: RoommateProfile): OnboardingDraft {
     cleanliness: profile.cleanliness,
     social: profile.social,
     cooking: profile.cooking,
+    smoking: profile.smoking,
+    choreStyle: profile.choreStyle,
     mbti: profile.mbti,
   };
 }
@@ -319,6 +335,9 @@ export function parseProfile(value: unknown): RoommateProfile | null {
   ) {
     return null;
   }
+  const smoking = isSmokingHabit(record.smoking) ? record.smoking : record.smoking === undefined ? "no" : null;
+  const choreStyle = isChoreStyle(record.choreStyle) ? record.choreStyle : record.choreStyle === undefined ? "rotate" : null;
+  if (!smoking || !choreStyle) return null;
   let partnerMoveIn: PartnerMoveIn | null = null;
   if (record.relationship === "partner") {
     if (!isPartnerMoveIn(record.partnerMoveIn)) return null;
@@ -348,6 +367,8 @@ export function parseProfile(value: unknown): RoommateProfile | null {
     cleanliness: record.cleanliness,
     social: record.social,
     cooking: record.cooking,
+    smoking,
+    choreStyle,
     mbti: isMbtiType(record.mbti) ? record.mbti : null,
   };
 }
@@ -390,6 +411,8 @@ export function parseDraft(value: unknown): OnboardingDraft | null {
   draft.cleanliness = optional(record.cleanliness, isCleanlinessHabit);
   draft.social = optional(record.social, isSocialHabit);
   draft.cooking = optional(record.cooking, isCookingHabit);
+  draft.smoking = optional(record.smoking, isSmokingHabit);
+  draft.choreStyle = optional(record.choreStyle, isChoreStyle);
   draft.mbti = optional(record.mbti, isMbtiType);
   return draft;
 }

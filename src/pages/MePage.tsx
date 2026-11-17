@@ -86,7 +86,7 @@ export function MePage() {
         <PrimaryButton to="/onboarding?edit=1">修改资料</PrimaryButton>
         {confirmClear ? (
           <>
-            <p className="text-sm leading-6">会清掉资料、申请、聊天、上班地点和周边，以及这台手机上的房间、看房、租金、约法和合租空间。</p>
+            <p className="text-sm leading-6">会清掉资料、申请、聊天、上班地点、周边和值日表，以及这台手机上的房间、看房、租金、约法和合租空间。</p>
             <PrimaryButton
               variant="quiet"
               onClick={() => {
