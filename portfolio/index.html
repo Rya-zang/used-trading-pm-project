@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>臧金淑 · C端 / AI 产品经理实习</title>
+  <meta name="description" content="臧金淑，正在寻找 C端产品经理或 AI产品经理实习。可实习6个月，可立即到岗。">
+  <style>
+    :root {
+      --bg: #F3F0E8;
+      --ink: #1A1916;
+      --body: #3f3c37;
+      --label: #5C7383;
+      --line: #E0DBD0;
+      --card: #ffffff;
+      --m: 1.5rem;
+      --label-size: 0.875rem;
+      --body-size: 1rem;
+      --title-size: 1.5rem;
+      --name-size: 2.25rem;
+      color-scheme: light;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { height: 100%; }
+
+    body {
+      margin: 0;
+      min-height: 100%;
+      background: var(--bg);
+      color: var(--body);
+      font-family: Inter, "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", "Source Han Sans SC", "Microsoft YaHei", "WenQuanYi Micro Hei", "Droid Sans Fallback", sans-serif;
+      font-size: var(--body-size);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, p { margin: 0; }
+
+    p { text-wrap: pretty; }
+
+    ::selection {
+      background: var(--ink);
+      color: var(--bg);
+    }
+
+    .page {
+      width: min(60rem, calc(100% - (var(--m) * 2)));
+      margin: var(--m) auto;
+      display: flex;
+      flex-direction: column;
+      gap: var(--m);
+    }
+
+    .hero,
+    .card {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--m);
+      padding: var(--m);
+    }
+
+    .hero h1,
+    .card h2 {
+      color: var(--ink);
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+    }
+
+    .hero h1 { font-size: var(--name-size); }
+
+    .card h2 { font-size: var(--title-size); }
+
+    .card {
+      width: 100%;
+      background: var(--card);
+      border: 1px solid rgba(26, 25, 22, 0.06);
+      border-radius: 12px;
+    }
+
+    .kicker,
+    .col h3 {
+      color: var(--label);
+      font-size: var(--label-size);
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      line-height: 1.4;
+      text-transform: uppercase;
+    }
+
+    .col h3 { color: var(--ink); }
+
+    .lead p:last-child { color: var(--ink); }
+
+    .rule {
+      width: 100%;
+      margin: 0;
+      border: 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .split {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr;
+    }
+
+    .col {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--m);
+      min-width: 0;
+    }
+
+    .col + .col {
+      margin-top: var(--m);
+      padding-top: var(--m);
+      border-top: 1px solid var(--line);
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 2.75rem;
+      padding: 0 var(--m);
+      border-radius: 999px;
+      background: #141414;
+      color: #fff;
+      font-size: var(--body-size);
+      font-weight: 500;
+      line-height: 1;
+      text-decoration: none;
+    }
+
+    .pill:hover { background: #000; }
+
+    .pill:focus-visible {
+      outline: 2px solid #141414;
+      outline-offset: 3px;
+    }
+
+    .empty {
+      width: 100%;
+      padding: var(--m);
+      border: 1px dashed var(--line);
+      border-radius: 12px;
+      color: var(--label);
+    }
+
+    @media (min-width: 48rem) {
+      .split { grid-template-columns: 1fr 1fr; }
+
+      .col + .col {
+        margin-top: 0;
+        padding-top: 0;
+        margin-left: var(--m);
+        padding-left: var(--m);
+        border-top: 0;
+        border-left: 1px solid var(--line);
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <h1>臧金淑</h1>
+      <div class="lead">
+        <p>正在寻找 C端产品经理或 AI产品经理实习。</p>
+        <p>可实习6个月，可立即到岗。</p>
+      </div>
+    </header>
+
+    <article class="card" aria-labelledby="shunxin-title">
+      <p class="kicker">01 / Personal Project</p>
+      <h2 id="shunxin-title">顺心</h2>
+      <p>合租室友匹配</p>
+      <p>两条路径：已有房找室友，或先匹配再一起找房。按生活习惯做合拍匹配；<br>匹配后一起搜房、看房、分摊租金，并写下房屋规矩。</p>
+      <hr class="rule">
+      <div class="split">
+        <div class="col">
+          <h3>LOGIC</h3>
+          <p>对照生活习惯、通勤和房屋规矩，再给一份合拍解读。</p>
+        </div>
+        <div class="col">
+          <h3>DEMO</h3>
+          <p>已上线可体验。</p>
+          <a class="pill" href="https://fleet-onyx-bp20toq.tmp.now" target="_blank" rel="noopener noreferrer">打开 Demo</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="card" aria-labelledby="campus-title">
+      <p class="kicker">02 / PRD</p>
+      <h2 id="campus-title">校园二手交易平台</h2>
+      <p>基于校园二手平台 Used-Trading-Platform2 的产品方案。毕业即时专场面向在校同学，可以当场交货；开学预存专场把未成交的闲置放到合作代管点，开学再给新生。买家提交意向预约，不在线上付款。</p>
+      <a class="pill" href="../03-PRD.md">打开 PRD</a>
+    </article>
+
+    <article class="card" aria-labelledby="resume-title">
+      <p class="kicker">03 / Resume</p>
+      <h2 id="resume-title">PDF 简历</h2>
+      <p class="empty">PDF 将放在这里。</p>
+    </article>
+  </main>
+</body>
+</html>
