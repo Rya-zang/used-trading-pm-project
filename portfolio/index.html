@@ -4,15 +4,20 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>臧金淑 · C端 / AI 产品经理实习</title>
-  <meta name="description" content="臧金淑，正在寻找 C端产品经理或 AI产品经理实习。可实习6个月，可立即到岗。个人项目：顺心，合租室友匹配。">
+  <meta name="description" content="臧金淑，正在寻找 C端产品经理或 AI产品经理实习。可实习6个月，可立即到岗。">
   <style>
     :root {
       --bg: #F3F0E8;
       --ink: #1A1916;
-      --muted: #6F6B64;
+      --body: #3f3c37;
       --label: #5C7383;
       --line: #E0DBD0;
       --card: #ffffff;
+      --m: 1.5rem;
+      --label-size: 0.875rem;
+      --body-size: 1rem;
+      --title-size: 1.5rem;
+      --name-size: 2.25rem;
       color-scheme: light;
     }
 
@@ -24,15 +29,16 @@
       margin: 0;
       min-height: 100%;
       background: var(--bg);
-      color: var(--ink);
+      color: var(--body);
       font-family: Inter, "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", "Source Han Sans SC", "Microsoft YaHei", "WenQuanYi Micro Hei", "Droid Sans Fallback", sans-serif;
-      font-size: 16px;
-      line-height: 1.6;
+      font-size: var(--body-size);
+      line-height: 1.7;
       -webkit-font-smoothing: antialiased;
-      text-rendering: optimizeLegibility;
     }
 
     h1, h2, h3, p { margin: 0; }
+
+    p { text-wrap: pretty; }
 
     ::selection {
       background: var(--ink);
@@ -40,115 +46,92 @@
     }
 
     .page {
-      width: min(980px, calc(100% - 3rem));
-      margin: 0 auto;
-      padding: 4.25rem 0 5.5rem;
+      width: min(60rem, calc(100% - (var(--m) * 2)));
+      margin: var(--m) auto;
+      display: flex;
+      flex-direction: column;
+      gap: var(--m);
     }
 
-    .hero h1 {
-      font-size: clamp(3.25rem, 12vw, 6.5rem);
-      font-weight: 600;
-      letter-spacing: -0.045em;
-      line-height: 0.95;
+    .hero,
+    .card {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--m);
+      padding: var(--m);
     }
 
-    .seek {
-      margin-top: 1.5rem;
-      max-width: 22em;
-      color: var(--muted);
-      font-size: 1.125rem;
-      line-height: 1.65;
-      text-wrap: pretty;
-    }
-
-    .keep { white-space: nowrap; }
-
-    .avail {
-      margin-top: 0.4rem;
+    .hero h1,
+    .card h2 {
       color: var(--ink);
-      font-size: 1rem;
-      line-height: 1.6;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      line-height: 1.2;
     }
 
-    .project { margin-top: 4.75rem; }
+    .hero h1 { font-size: var(--name-size); }
 
-    .kicker {
+    .card h2 { font-size: var(--title-size); }
+
+    .card {
+      width: 100%;
+      background: var(--card);
+      border: 1px solid rgba(26, 25, 22, 0.06);
+      border-radius: 12px;
+    }
+
+    .kicker,
+    .col h3 {
       color: var(--label);
-      font-size: 0.75rem;
+      font-size: var(--label-size);
       font-weight: 600;
-      letter-spacing: 0.16em;
+      letter-spacing: 0.14em;
+      line-height: 1.4;
       text-transform: uppercase;
     }
 
-    .project h2 {
-      margin-top: 1rem;
-      font-size: clamp(2.75rem, 9vw, 5.25rem);
-      font-weight: 600;
-      letter-spacing: -0.045em;
-      line-height: 0.98;
-    }
+    .col h3 { color: var(--ink); }
 
-    .subtitle {
-      margin-top: 0.85rem;
-      color: var(--muted);
-      font-size: 1.25rem;
-      line-height: 1.4;
-    }
-
-    .desc {
-      margin-top: 1.15rem;
-      max-width: 38em;
-      color: var(--muted);
-      font-size: 1.02rem;
-      line-height: 1.75;
-      text-wrap: pretty;
-    }
+    .lead p:last-child { color: var(--ink); }
 
     .rule {
-      margin: 2.5rem 0;
+      width: 100%;
+      margin: 0;
       border: 0;
       border-top: 1px solid var(--line);
     }
 
-    .card {
+    .split {
+      width: 100%;
       display: grid;
       grid-template-columns: 1fr;
-      background: var(--card);
-      border: 1px solid rgba(26, 25, 22, 0.06);
-      border-radius: 16px;
-      overflow: hidden;
     }
 
-    .col { padding: 1.6rem 1.35rem 1.85rem; }
-
-    .col + .col { border-top: 1px solid var(--line); }
-
-    .col h3 {
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.16em;
-      line-height: 1.2;
+    .col {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--m);
+      min-width: 0;
     }
 
-    .col p {
-      margin-top: 0.9rem;
-      max-width: 28em;
-      font-size: 1.02rem;
-      line-height: 1.75;
-      text-wrap: pretty;
+    .col + .col {
+      margin-top: var(--m);
+      padding-top: var(--m);
+      border-top: 1px solid var(--line);
     }
 
     .pill {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-height: 44px;
-      margin-top: 1.35rem;
-      padding: 0 1.2rem;
+      min-height: 2.75rem;
+      padding: 0 var(--m);
       border-radius: 999px;
       background: #141414;
       color: #fff;
-      font-size: 0.95rem;
+      font-size: var(--body-size);
       font-weight: 500;
       line-height: 1;
       text-decoration: none;
@@ -161,19 +144,22 @@
       outline-offset: 3px;
     }
 
-    @media (min-width: 760px) {
-      .page {
-        width: min(980px, calc(100% - 6rem));
-        padding: 6.5rem 0 7.5rem;
-      }
+    .empty {
+      width: 100%;
+      padding: var(--m);
+      border: 1px dashed var(--line);
+      border-radius: 12px;
+      color: var(--label);
+    }
 
-      .project { margin-top: 6.25rem; }
-
-      .card { grid-template-columns: 1fr 1fr; }
-
-      .col { padding: 2.5rem 2.6rem 2.75rem; }
+    @media (min-width: 48rem) {
+      .split { grid-template-columns: 1fr 1fr; }
 
       .col + .col {
+        margin-top: 0;
+        padding-top: 0;
+        margin-left: var(--m);
+        padding-left: var(--m);
         border-top: 0;
         border-left: 1px solid var(--line);
       }
@@ -184,20 +170,22 @@
   <main class="page">
     <header class="hero">
       <h1>臧金淑</h1>
-      <p class="seek"><span class="keep">正在寻找 C端产品经理</span><span class="keep">或 AI产品经理实习。</span></p>
-      <p class="avail">可实习6个月，可立即到岗。</p>
+      <div class="lead">
+        <p>正在寻找 C端产品经理或 AI产品经理实习。</p>
+        <p>可实习6个月，可立即到岗。</p>
+      </div>
     </header>
 
-    <section class="project" aria-labelledby="project-title">
-      <p class="kicker">01 / PERSONAL PROJECT</p>
-      <h2 id="project-title">顺心</h2>
-      <p class="subtitle">合租室友匹配</p>
-      <p class="desc">两条路径：<span class="keep">已有房</span>找<span class="keep">室友</span>，或先<span class="keep">匹配</span>再一起<span class="keep">找房</span>。按<span class="keep">生活习惯</span>做<span class="keep">合拍匹配</span>；匹配后一起<span class="keep">搜房</span>、<span class="keep">看房</span>、<span class="keep">分摊租金</span>，并写下<span class="keep">房屋规矩</span>。</p>
+    <article class="card" aria-labelledby="shunxin-title">
+      <p class="kicker">01 / Personal Project</p>
+      <h2 id="shunxin-title">顺心</h2>
+      <p>合租室友匹配</p>
+      <p>两条路径：已有房找室友，或先匹配再一起找房。按生活习惯做合拍匹配；<br>匹配后一起搜房、看房、分摊租金，并写下房屋规矩。</p>
       <hr class="rule">
-      <div class="card">
+      <div class="split">
         <div class="col">
           <h3>LOGIC</h3>
-          <p><span class="keep">对照生活习惯、通勤和房屋规矩，</span><span class="keep">再给一份合拍解读。</span></p>
+          <p>对照生活习惯、通勤和房屋规矩，再给一份合拍解读。</p>
         </div>
         <div class="col">
           <h3>DEMO</h3>
@@ -205,7 +193,20 @@
           <a class="pill" href="https://fleet-onyx-bp20toq.tmp.now" target="_blank" rel="noopener noreferrer">打开 Demo</a>
         </div>
       </div>
-    </section>
+    </article>
+
+    <article class="card" aria-labelledby="campus-title">
+      <p class="kicker">02 / PRD</p>
+      <h2 id="campus-title">校园二手交易平台</h2>
+      <p>基于校园二手平台 Used-Trading-Platform2 的产品方案。毕业即时专场面向在校同学，可以当场交货；开学预存专场把未成交的闲置放到合作代管点，开学再给新生。买家提交意向预约，不在线上付款。</p>
+      <a class="pill" href="../03-PRD.md">打开 PRD</a>
+    </article>
+
+    <article class="card" aria-labelledby="resume-title">
+      <p class="kicker">03 / Resume</p>
+      <h2 id="resume-title">PDF 简历</h2>
+      <p class="empty">PDF 将放在这里。</p>
+    </article>
   </main>
 </body>
 </html>
